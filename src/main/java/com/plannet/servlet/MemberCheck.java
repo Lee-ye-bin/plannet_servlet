@@ -1,4 +1,4 @@
-package com.plannet;
+package com.plannet.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Common
+ * Servlet implementation class MemberCheck
  */
-@WebServlet("/Common")
-public class Common extends HttpServlet {
+@WebServlet("/MemberCheck")
+public class MemberCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Common() {
+    public MemberCheck() {
         super();
         // TODO Auto-generated constructor stub
-        // 찬영테스트
     }
 
 	/**
@@ -40,5 +39,3 @@ public class Common extends HttpServlet {
 	}
 
 }
-
-/***/
