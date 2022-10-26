@@ -20,6 +20,7 @@ public class Common extends HttpServlet {
     public Common() {
         super();
         // TODO Auto-generated constructor stub
+        // 찬영테스트
     }
 
 	/**
