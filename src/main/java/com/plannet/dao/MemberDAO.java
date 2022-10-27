@@ -1,4 +1,5 @@
 package com.plannet.dao;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -25,8 +26,8 @@ public class MemberDAO {
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
-				String sqlId = rs.getString("ID"); // 쿼리문 수행 결과에서 ID값을 가져 옴
-				String sqlPwd = rs.getString("PWD");
+				String sqlId = rs.getString("ID"); // 쿼리문 수행 결과에서 ID값을 가져옴
+				String sqlPwd = rs.getString("PWD"); // 쿼리문 수행 결과에서 PWD값을 가져옴
 				System.out.println("ID : " + sqlId);
 				System.out.println("PWD : " + sqlPwd);
 				if(id.equals(sqlId) && pwd.equals(sqlPwd)) {
@@ -57,14 +58,20 @@ public class MemberDAO {
 				String id = rs.getString("ID");
 				String pwd = rs.getString("PWD");
 				String name = rs.getString("NAME");
+				String nickname = rs.getString("NICKNAME");
 				String email = rs.getString("EMAIL");
-				Date join = rs.getDate("JOIN");
+				String tel = rs.getString("TEL");
+				Date birth = rs.getDate("BIRTH");
+				Date join = rs.getDate("JOIN_DATE");
 				
 				MemberVO vo = new MemberVO();
 				vo.setId(id);
 				vo.setPwd(pwd);
 				vo.setName(name);
+				vo.setNickname(nickname);
 				vo.setEmail(email);
+				vo.setTel(tel);
+				vo.setBirth(birth);
 				vo.setJoin(join);
 				list.add(vo);
 			}
@@ -96,24 +103,29 @@ public class MemberDAO {
 		Common.close(conn);
 		return isNotReg; // 가입 되어 있으면 false, 가입이 안 되어 있으면 true 
 	}
-//	
-//	public boolean memberRegister(String id, String pwd, String name, String mail) {
-//		String sql = "INSERT INTO T_MEMBER(ID, PWD, NAME, EMAIL, JOIN) VALUES (?,?,?,?,SYSDATE)";
-//		try {
-//			conn = Common.getConnection();
-//	    	pstmt = conn.prepareStatement(sql);
-//	    	pstmt.setString(1, id);
-//	    	pstmt.setString(2, pwd);
-//	    	pstmt.setString(3, name);
-//	    	pstmt.setString(4,  mail);
-//	    	pstmt.executeUpdate();
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		Common.close(pstmt);
-//	    Common.close(conn);
-//		return true;	
-//	}
-//	
+
+	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel, Date birth) {
+		int result = 0;
+		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL, BIRTH, JOIN_DATE) VALUES (?,?,?,?,?,?,?,SYSDATE)";
+		try {
+			conn = Common.getConnection();
+	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	pstmt.setString(1, id);
+	    	pstmt.setString(2, pwd);
+	    	pstmt.setString(3, name);
+	    	pstmt.setString(4, nickname);
+	    	pstmt.setString(5, email);
+	    	pstmt.setString(6, tel);
+	    	pstmt.setDate(7,  birth);
+	    	result = pstmt.executeUpdate();
+	    	System.out.println("회원 가입 DB 결과 확인: " + result); // 1이면 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
+	    if(result == 1) return true;	
+	    else return false;
+	}
 }
