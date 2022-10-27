@@ -1,5 +1,6 @@
 package com.plannet.dao;
 
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -85,13 +86,21 @@ public class MemberDAO {
 		return list;
 	}
 
-	public boolean regIdCheck(String id) { // 가입되지 '않은' 경우만 진행되어야 함 
+	public boolean regUniCheck(String uni, String type) { // 가입되지 '않은' 경우만 진행되어야 함 
 		boolean isNotReg = false;
 		try {
 			conn = Common.getConnection();
-			stmt = conn.createStatement();
-			String sql = "SELECT * FROM MEMBER WHERE id = " + "'" + id + "'";
-			rs = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			System.out.println(type);
+			switch (type) {
+				case "TYPE_ID" : 
+					String sql = "SELECT * FROM MEMBER WHERE ID = '?'";
+					pstmt.setString(1, uni); break;
+				case "TYPE_EMAIL" : String email = "EMAIL"; pstmt.setString(1, email); pstmt.setString(2, uni); break;
+				case "TYPE_TEL" : String tel = "TEL"; pstmt.setString(1, tel); pstmt.setString(2, uni); break;
+			}
+			
+			rs = pstmt.executeQuery(sql);
 			
 			if(rs.next()) isNotReg = false;
 			else isNotReg = true;
@@ -99,7 +108,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		Common.close(rs); // close 한 뒤에 return 해야 함 
-		Common.close(stmt);
+		Common.close(pstmt);
 		Common.close(conn);
 		return isNotReg; // 가입 되어 있으면 false, 가입이 안 되어 있으면 true 
 	}
