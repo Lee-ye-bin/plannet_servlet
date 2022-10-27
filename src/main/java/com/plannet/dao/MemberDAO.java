@@ -61,7 +61,7 @@ public class MemberDAO {
 				String nickname = rs.getString("NICKNAME");
 				String email = rs.getString("EMAIL");
 				String tel = rs.getString("TEL");
-				Date birth = rs.getDate("BIRTH");
+				//Date birth = rs.getDate("BIRTH");
 				Date join = rs.getDate("JOIN_DATE");
 				
 				MemberVO vo = new MemberVO();
@@ -71,7 +71,7 @@ public class MemberDAO {
 				vo.setNickname(nickname);
 				vo.setEmail(email);
 				vo.setTel(tel);
-				vo.setBirth(birth);
+				//vo.setBirth(birth);
 				vo.setJoin(join);
 				list.add(vo);
 			}
@@ -104,9 +104,9 @@ public class MemberDAO {
 		return isNotReg; // 가입 되어 있으면 false, 가입이 안 되어 있으면 true 
 	}
 
-	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel, Date birth) {
+	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel) {
 		int result = 0;
-		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL, BIRTH, JOIN_DATE) VALUES (?,?,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL, JOIN_DATE) VALUES (?,?,?,?,?,?,SYSDATE)";
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
@@ -116,7 +116,7 @@ public class MemberDAO {
 	    	pstmt.setString(4, nickname);
 	    	pstmt.setString(5, email);
 	    	pstmt.setString(6, tel);
-	    	pstmt.setDate(7,  birth);
+	    	//pstmt.setDate(7,  birth);
 	    	result = pstmt.executeUpdate();
 	    	System.out.println("회원 가입 DB 결과 확인: " + result); // 1이면 성공
 		} catch (Exception e) {
