@@ -21,7 +21,7 @@ public class MemberDAO {
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
-			String sql = "SELECT * FROM T_MEMBER WHERE ID = " + "'" + id + "'";
+			String sql = "SELECT * FROM MEMBER WHERE ID = " + "'" + id + "'";
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
@@ -50,7 +50,7 @@ public class MemberDAO {
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
-			String sql = "SELECT * FROM T_MEMBER";
+			String sql = "SELECT * FROM MEMBER";
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -83,7 +83,7 @@ public class MemberDAO {
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
-			String sql = "SELECT * FROM t_member WHERE id = " + "'" + id + "'";
+			String sql = "SELECT * FROM MEMBER WHERE id = " + "'" + id + "'";
 			rs = stmt.executeQuery(sql);
 			
 			if(rs.next()) isNotReg = false;
