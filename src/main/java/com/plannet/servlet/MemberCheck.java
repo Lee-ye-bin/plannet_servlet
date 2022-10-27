@@ -31,7 +31,6 @@ public class MemberCheck extends HttpServlet {
 		StringBuffer sb = Common.reqStringBuff(request);
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		String getId = (String)jsonObj.get("id");
-		System.out.println(sb); // 테스트용 id 출력 
 		
 		MemberDAO dao = new MemberDAO();
 		boolean isNotReg = dao.regIdCheck(getId); // isNotReg = TRUE 이면 가입이 안 된 경우를 나타냄

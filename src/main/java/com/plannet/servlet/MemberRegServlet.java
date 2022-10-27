@@ -15,39 +15,38 @@ import com.plannet.common.Common;
 import com.plannet.dao.MemberDAO;
 
 
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/MemberRegServlet")
+public class MemberRegServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-	
+
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 한글 깨짐 방지를 위해서 설정
 		request.setCharacterEncoding("utf-8");
-		// CORS 접근 허용
 		Common.corsResSet(response);
-		// 요청 메시지 받기
 		StringBuffer sb = Common.reqStringBuff(request);
-		
-		// 요청 받은 메시지 JSON 파싱
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String getId = (String)jsonObj.get("id");
 		String getPwd = (String)jsonObj.get("pwd");
+		String getName = (String)jsonObj.get("name");
+		String getNickname = (String)jsonObj.get("nickname");
+		String getEmail = (String)jsonObj.get("email");
+		String getTel = (String)jsonObj.get("tel");
 		
 		MemberDAO dao = new MemberDAO();
-		boolean isRegister = dao.logingCheck(getId, getPwd);
+		boolean rstComplete = dao.memberRegister(getId, getPwd, getName, getNickname, getEmail, getTel);
 		
 		PrintWriter out = response.getWriter();
 		JSONObject resJson = new JSONObject();
-		if(isRegister) resJson.put("result", "OK");
+		if(rstComplete) resJson.put("result", "OK");
 		else resJson.put("result", "NOK");
-		out.print(resJson);	
+		out.print(resJson);
 	}
 }
