@@ -89,18 +89,24 @@ public class MemberDAO {
 	public boolean regUniCheck(String uni, String type) { // 가입되지 '않은' 경우만 진행되어야 함 
 		boolean isNotReg = false;
 		try {
+			String sql = "";
 			conn = Common.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			stmt = conn.createStatement();
+			char t = type.charAt(5);
 			System.out.println(type);
-			switch (type) {
-				case "TYPE_ID" : 
-					String sql = "SELECT * FROM MEMBER WHERE ID = '?'";
-					pstmt.setString(1, uni); break;
-				case "TYPE_EMAIL" : String email = "EMAIL"; pstmt.setString(1, email); pstmt.setString(2, uni); break;
-				case "TYPE_TEL" : String tel = "TEL"; pstmt.setString(1, tel); pstmt.setString(2, uni); break;
+			switch (t) {
+				case 'I' : 
+					sql = "SELECT * FROM MEMBER WHERE ID = '"+ uni +"'";
+					break;
+				case 'E' : 
+					sql = "SELECT * FROM MEMBER WHERE EMAIL = '"+ uni +"'";
+					break;
+				case 'T' : 
+					sql = "SELECT * FROM MEMBER WHERE TEL = '"+ uni +"'";
+					break;
 			}
 			
-			rs = pstmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql);
 			
 			if(rs.next()) isNotReg = false;
 			else isNotReg = true;
@@ -108,7 +114,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		Common.close(rs); // close 한 뒤에 return 해야 함 
-		Common.close(pstmt);
+		Common.close(stmt);
 		Common.close(conn);
 		return isNotReg; // 가입 되어 있으면 false, 가입이 안 되어 있으면 true 
 	}
