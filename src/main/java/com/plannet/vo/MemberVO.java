@@ -11,8 +11,15 @@ public class MemberVO {
 	private String tel;
 //	private Date birth;
 	private Date join;
+	private Date memo;
 	
 	
+	public Date getMemo() {
+		return memo;
+	}
+	public void setMemo(Date memo) {
+		this.memo = memo;
+	}
 	public String getId() {
 		return id;
 	}

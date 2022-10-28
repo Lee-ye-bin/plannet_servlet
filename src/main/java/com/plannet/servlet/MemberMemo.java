@@ -17,7 +17,9 @@ import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
 import com.plannet.dao.MemberDAO;
+import com.plannet.dao.MemoDAO;
 import com.plannet.vo.MemberVO;
+import com.plannet.vo.MemoVO;
 
 
 @WebServlet("/MemberMemo")
@@ -45,35 +47,22 @@ public class MemberMemo extends HttpServlet {
 		StringBuffer sb = Common.reqStringBuff(request);
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		
-		System.out.println("Command : " + (String)jsonObj.get("cmd"));
-		String reqCmd = (String)jsonObj.get("cmd");
+		System.out.println("id : " + (String)jsonObj.get("id"));
+		String reqId = (String)jsonObj.get("id");
 		
 		PrintWriter out = response.getWriter();
 		
-		if(!reqCmd.equals("MemberInfo")) {
-			JSONObject resJson = new JSONObject();
-			resJson.put("result", "NOK");
-			out.print(resJson);
-			return;
-		}
 		
-		MemberDAO dao = new MemberDAO();
-		List<MemberVO> list = dao.memberSelect();
+		MemoDAO dao = new MemoDAO();
+		List<MemoVO> list = dao.memberMemo(reqId); 
 		
-		JSONArray memberArray = new JSONArray();
-		
-		
-		for(MemberVO e : list) {
-			JSONObject memberInfo = new JSONObject();
-			memberInfo.put("id", e.getId());
-			memberInfo.put("pwd", e.getPwd());
-			memberInfo.put("name", e.getName());
-			memberInfo.put("email", e.getEmail());
-			DateFormat dateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
-			String dateToStr = dateFormat.format(e.getJoin());
-			memberInfo.put("join", dateToStr);
-			memberArray.add(memberInfo);
+		JSONArray memoArray = new JSONArray();
+		for(MemoVO e : list) {
+			JSONObject memoText = new JSONObject();
+			memoText.put("id", e.getId());
+			memoText.put("memo", e.getMemo());
+			memoArray.add(memoText);
 		}	
-		out.print(memberArray);
+		out.print(memoArray);
 	}
 }
