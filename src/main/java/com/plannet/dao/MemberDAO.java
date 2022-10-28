@@ -128,4 +128,24 @@ public class MemberDAO {
 	    if(result == 1) return true;	
 	    else return false;
 	}
+	
+	public boolean memberMemo(String id) {
+		try {
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sql = "SELECT * FROM MEMO WHERE ID = " + "'" + id + "'";
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) { // 읽은 데이타가 있으면 true
+				String sqlMemo = rs.getString("MEMO"); // 쿼리문 수행 결과에서 ID값을 가져옴
+				System.out.println("ID : " + sqlMemo);
+			}
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
