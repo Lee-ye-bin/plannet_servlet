@@ -126,7 +126,7 @@ public class MemberDAO {
 		Common.close(pstmt);
 	    Common.close(conn);
 	    if(result == 1) return true;	
-	    else return false;
+	    else return false; ---
 	}
 	
 	public boolean memberMemo(String id) {
