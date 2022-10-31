@@ -46,6 +46,21 @@ public class MemoDAO {
 		return list;
 	}
 	
-	
+	public void memberMemoSave(String id, String memo) {
+		String sql = "UPDATE MEMO SET MEMO = ? WHERE ID = ?";
+		try {
+			conn = Common.getConnection();
+	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	pstmt.setString(1, memo);
+	    	pstmt.setString(2, id);
+	    	pstmt.executeUpdate();
+	    	System.out.println("메모저장");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
+	}
 
 }

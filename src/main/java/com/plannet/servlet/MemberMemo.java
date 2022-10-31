@@ -59,7 +59,6 @@ public class MemberMemo extends HttpServlet {
 		JSONArray memoArray = new JSONArray();
 		for(MemoVO e : list) {
 			JSONObject memoText = new JSONObject();
-			memoText.put("id", e.getId());
 			memoText.put("memo", e.getMemo());
 			memoArray.add(memoText);
 		}	
