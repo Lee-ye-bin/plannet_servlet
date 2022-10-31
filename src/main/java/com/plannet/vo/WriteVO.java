@@ -3,7 +3,7 @@ package com.plannet.vo;
 import java.sql.Date;
 import java.util.List;
 
-public class MemoVO {
+public class WriteVO {
 	String id;
 	Date date;
 	List<String> plan;
@@ -33,5 +33,7 @@ public class MemoVO {
 	public void setDiary(String diary) {
 		this.diary = diary;
 	}
+	
+	
 
 }
