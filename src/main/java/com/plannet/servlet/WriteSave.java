@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,8 +38,8 @@ public class WriteSave extends HttpServlet {
       StringBuffer sb = Common.reqStringBuff(request);
       JSONObject jsonObj = Common.getJsonObj(sb);
       String getId = (String)jsonObj.get("id");
-      Date getDate = (Date)jsonObj.get("date");
-      List<String> getPlan = (List<String>)jsonObj.get("plan");
+      Date getDate = Date.valueOf((String) jsonObj.get("date"));
+      List<Map<String, Object>> getPlan = (List<Map<String, Object>>)jsonObj.get("plan");
       String getDiary = (String)jsonObj.get("diary");
       
       WriteDAO dao = new WriteDAO();

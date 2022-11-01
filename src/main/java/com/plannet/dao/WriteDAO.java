@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.plannet.common.Common;
 import com.plannet.vo.MemberVO;
@@ -47,28 +48,62 @@ public class WriteDAO {
 //		return list;
 //	}
 //	
-	public void writeSave(String id, Date date, List<String> plan, String diary) {
-		String sqlDiary = "UPDATE DIARY SET DIARY = ? WHERE ID = ? AND DIARY_DATE = ?";
-		String sqlRemoveList = "DELETE FROM PLAN WHERE ID = ? AND PLAN_DATE = ?";
-//		String sqlUpdate = "UPDATE MEMO SET MEMO = ? WHERE ID = ?";
+	public void writeSave(String id, Date date, List<Map<String, Object>> plan, String diary) {
+		String sqlDiaryCheck = "SELECT * FROM DIARY WHERE ID = '" + id + "' AND DIARY_DATE = '" + date + "'" ;
+		String sqlDiaryUdate = "UPDATE DIARY SET DIARY = ? WHERE ID = ? AND DIARY_DATE = ?";
+		String sqlDiaryInsert = "INSERT INTO DIARY VALUES(?, ?, ?)";
+		String sqlListRemove = "DELETE FROM PLAN WHERE ID = ? AND PLAN_DATE = ?";
+		String sqlListInsert = "INSERT INTO PLAN VALUES(?, ?, ?, ?, ?)";
 		try {
 			conn = Common.getConnection();
 			
 			//PLAN 일괄삭제
-			pstmt = conn.prepareStatement(sqlRemoveList); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+			pstmt = conn.prepareStatement(sqlListRemove); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
 	    	pstmt.setString(1, id);
 	    	pstmt.setDate(2, date);
 	    	pstmt.executeUpdate();
 	    	
 	    	//PLAN 저장
+	    	int cnt = 1;
 	    	
-			
+	    	for(Map<String, Object> p : plan) {
+	    		String deleted = (String) p.get("deleted");
+	    		//System.out.println(p.get("deleted"));
+	    		if(deleted.equals("false")) {
+	    			pstmt = conn.prepareStatement(sqlListInsert); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	    	pstmt.setString(1, id);
+	    	    	pstmt.setDate(2, date);
+	    	    	pstmt.setInt(3, cnt);
+	    	    	if(p.get("checked").equals(true)) pstmt.setInt(4, 1);
+	    	    	else pstmt.setInt(4, 0);
+	    	    	pstmt.setString(5, (String) p.get("text"));
+	    	    	pstmt.executeUpdate();
+	    	    	cnt++;
+	    		} 
+	    	}
+	    	
+
 			//DIARY 업데이트
-	    	pstmt = conn.prepareStatement(sqlDiary); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
-	    	pstmt.setString(1, diary);
-	    	pstmt.setString(2, id);
-	    	pstmt.setDate(3, date);
-	    	pstmt.executeUpdate();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			rs = stmt.executeQuery(sqlDiaryCheck);
+			
+			if(rs.next()) {
+				pstmt = conn.prepareStatement(sqlDiaryUdate); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+				pstmt.setString(1, diary);
+		    	pstmt.setString(2, id);
+		    	pstmt.setDate(3, date);
+		    	pstmt.executeUpdate();
+			} else {
+				pstmt = conn.prepareStatement(sqlDiaryInsert); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+				pstmt.setString(1, id);
+		    	pstmt.setDate(2, date);
+		    	pstmt.setString(3, diary);
+		    	pstmt.executeUpdate();
+			};
+			
+			
+	    	
+	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
