@@ -29,7 +29,7 @@ public class MemoDAO {
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
-				String sqlMemo = rs.getString("MEMO"); // 쿼리문 수행 결과에서 ID값을 가져옴
+				String sqlMemo = rs.getString("MEMO");
 				String sqlId = rs.getString("ID");
 				System.out.println("MEMO : " + sqlMemo);
 				MemoVO vo = new MemoVO();
