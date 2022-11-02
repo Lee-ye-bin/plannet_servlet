@@ -72,6 +72,42 @@ public class UserInfoDAO {
 		Common.close(pstmt);
 	    Common.close(conn);
 	}
+	
+	public int userDo(String id) {
+		int checkPlan = 0, allPlan = 0;
+		
+		try {
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sqlPlan = "SELECT COUNT(*) FROM PLAN WHERE ID = '" + id + "'";
+			rs = stmt.executeQuery(sqlPlan);
+			
+			while(rs.next()) { // 읽은 데이타가 있으면 true
+				allPlan = rs.getInt("COUNT(*)");
+			}
+			
+			Common.close(rs);
+			Common.close(pstmt);
+		    Common.close(conn);
+				//-------------------------------------------------------------------------------------
+		    conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+		    String sqlCheckPlan = "SELECT COUNT(*) FROM PLAN WHERE ID = '" + id + "' AND PLAN_CHECK = 1";
+		    rs = stmt.executeQuery(sqlCheckPlan);
+		    
+		    while(rs.next()) { // 읽은 데이타가 있으면 true
+				checkPlan = rs.getInt("COUNT(*)");
+		    }
+		    
+		    Common.close(rs);
+			Common.close(pstmt);
+		    Common.close(conn);
+	    	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (int)Math.floor(checkPlan*100/allPlan);
+		
 
-
+	}
 }
