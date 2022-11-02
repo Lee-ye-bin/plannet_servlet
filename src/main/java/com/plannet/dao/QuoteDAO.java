@@ -41,3 +41,4 @@ public class QuoteDAO {
 		return sqlQuote;
 	}
 }
+//

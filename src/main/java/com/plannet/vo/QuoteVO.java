@@ -16,3 +16,5 @@ public class QuoteVO {
 		this.quote = quote;
 	}	
 }
+
+//
