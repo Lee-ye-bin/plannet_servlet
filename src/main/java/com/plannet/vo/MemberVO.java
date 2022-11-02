@@ -12,6 +12,8 @@ public class MemberVO {
 //	private Date birth;
 	private Date join;
 	private String memo;
+	private String sns;
+	private String profile;
 	
 	public String getId() {
 		return id;
@@ -66,6 +68,18 @@ public class MemberVO {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getSns() {
+		return sns;
+	}
+	public void setSns(String sns) {
+		this.sns = sns;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 }
 
