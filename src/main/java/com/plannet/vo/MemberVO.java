@@ -55,7 +55,7 @@ public class MemberVO {
 //		return birth;
 //	}
 //	public void setBirth(Date birth) {
-//		this.birth = birth;
+//		this.birth = birth; //
 //	}
 	public Date getJoin() {
 		return join;
