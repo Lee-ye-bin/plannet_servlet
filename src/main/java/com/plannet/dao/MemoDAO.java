@@ -25,7 +25,7 @@ public class MemoDAO {
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
-			String sql = "SELECT * FROM MEMO WHERE ID = " + "'" + id + "'";
+			String sql = "SELECT * FROM MEMBER WHERE ID = " + "'" + id + "'";
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
@@ -47,7 +47,7 @@ public class MemoDAO {
 	}
 	
 	public void memberMemoSave(String id, String memo) {
-		String sql = "UPDATE MEMO SET MEMO = ? WHERE ID = ?";
+		String sql = "UPDATE MEMBER SET MEMO = ? WHERE ID = ?";
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
