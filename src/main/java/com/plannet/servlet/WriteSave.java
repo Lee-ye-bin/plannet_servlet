@@ -1,7 +1,6 @@
 package com.plannet.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
-import com.plannet.dao.MemoDAO;
 import com.plannet.dao.WriteDAO;
 
 

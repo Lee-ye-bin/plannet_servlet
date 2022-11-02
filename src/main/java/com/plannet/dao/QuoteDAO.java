@@ -4,13 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import com.plannet.common.Common;
-import com.plannet.vo.MemoVO;
-import com.plannet.vo.QuoteVO;
 
 public class QuoteDAO {
 	private Connection conn = null;

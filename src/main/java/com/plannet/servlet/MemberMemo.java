@@ -2,8 +2,6 @@ package com.plannet.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,10 +14,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
-import com.plannet.dao.MemberDAO;
 import com.plannet.dao.MemoDAO;
 import com.plannet.vo.MemberVO;
-import com.plannet.vo.MemoVO;
 
 
 @WebServlet("/MemberMemo")
@@ -54,10 +50,10 @@ public class MemberMemo extends HttpServlet {
 		
 		
 		MemoDAO dao = new MemoDAO();
-		List<MemoVO> list = dao.memberMemo(reqId); 
+		List<MemberVO> list = dao.memberMemo(reqId); 
 		
 		JSONArray memoArray = new JSONArray();
-		for(MemoVO e : list) {
+		for(MemberVO e : list) {
 			JSONObject memoText = new JSONObject();
 			memoText.put("memo", e.getMemo());
 			memoArray.add(memoText);

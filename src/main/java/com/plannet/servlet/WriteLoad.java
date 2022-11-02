@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
-import com.plannet.dao.MemoDAO;
 import com.plannet.dao.WriteDAO;
-import com.plannet.vo.MemoVO;
 import com.plannet.vo.WriteVO;
 
 

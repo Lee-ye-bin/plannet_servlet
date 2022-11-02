@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.plannet.common.Common;
 import com.plannet.vo.MemberVO;
-import com.plannet.vo.MemoVO;
 
 public class MemoDAO {
 	private Connection conn = null;
@@ -19,8 +18,8 @@ public class MemoDAO {
 	private PreparedStatement pstmt = null; 
 
 	
-	public  List<MemoVO> memberMemo(String id) {
-		List<MemoVO> list = new ArrayList<>();
+	public  List<MemberVO> memberMemo(String id) {
+		List<MemberVO> list = new ArrayList<>();
 		
 		try {
 			conn = Common.getConnection();
@@ -32,17 +31,18 @@ public class MemoDAO {
 				String sqlMemo = rs.getString("MEMO");
 				String sqlId = rs.getString("ID");
 				System.out.println("MEMO : " + sqlMemo);
-				MemoVO vo = new MemoVO();
+				MemberVO vo = new MemberVO();
 				vo.setId(sqlId);
 				vo.setMemo(sqlMemo);
 				list.add(vo);
 			}
-			Common.close(rs);
-			Common.close(stmt);
-			Common.close(conn);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		Common.close(rs);
+		Common.close(stmt);
+		Common.close(conn);
 		return list;
 	}
 	
