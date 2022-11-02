@@ -3,6 +3,8 @@ package com.plannet.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,21 +43,26 @@ public class BoardTitleServlet extends HttpServlet {
 	    Common.corsResSet(response);
 	    StringBuffer sb = Common.reqStringBuff(request);
 	    JSONObject jsonObj = Common.getJsonObj(sb);
-	    int reqNo = (int)jsonObj.get("board_no");
-	    
+	    String reqNo = (String)jsonObj.get("board_no");
+	    int reNo = Integer.parseInt(reqNo);
 	    PrintWriter out = response.getWriter();
 	    
 	    BoardDAO dao = new BoardDAO();
-	    List<BoardVO> list = dao.board(reqNo);
+	    List<BoardVO> list = dao.board(reNo);
 	    
 	    JSONArray boardArray = new JSONArray();
 	    for(BoardVO e : list) {
 	    	JSONObject boardText = new JSONObject();
 	    	boardText.put("title",e.getTitle());
+	    	System.out.println(e.getTitle());
 	    	boardText.put("id",e.getId());
-	    	boardText.put("date",e.getDate());
+	    	boardText.put("view", e.getView());
+	    	DateFormat dateFormat = new SimpleDateFormat("YY/MM/dd");
+	    	String dateTostr = dateFormat.format(e.getDate());
+	    	boardText.put("write_date",dateTostr);
+	    	boardArray.add(boardText);
 	    }
 	    out.print(boardArray);
 	}
-
+	
 }

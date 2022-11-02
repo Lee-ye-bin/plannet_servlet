@@ -5,6 +5,8 @@ import java.sql.Date;
 public class BoardVO {
 	private int board_no;
 	private String id;
+	private String nickname;
+	private int view;
 	private String title;
 	private String detail;
 	private Date date;
@@ -37,6 +39,18 @@ public class BoardVO {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public int getView() {
+		return view;
+	}
+	public void setView(int view) {
+		this.view = view;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 	

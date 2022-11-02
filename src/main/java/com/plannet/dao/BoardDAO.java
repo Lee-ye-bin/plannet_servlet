@@ -33,25 +33,28 @@ public class BoardDAO {
 				int sqlNo = rs.getInt("BOARD_NO");
 				String sqlId = rs.getString("ID");
 				String sqlTitle = rs.getString("TITLE");
-				String sqlDetail = rs.getString("DITAIL");
-				Date sqlDate = rs.getDate("Date");
+				int sqlViews=rs.getInt("VIEWS");
+				Date sqlDate = rs.getDate("WRITE_DATE");
+				String sqlDetail = rs.getString("DETAIL");
+				
 				
 				System.out.println("BOARD_NO : " + sqlNo);
 				BoardVO vo = new BoardVO();
-				
 				vo.setBoard_no(sqlNo);
 				vo.setId(sqlId);
 				vo.setTitle(sqlTitle);
-				vo.setDetail(sqlDetail);
+				vo.setView(sqlViews);
 				vo.setDate(sqlDate);
+				vo.setDetail(sqlDetail);
 				list.add(vo);
 			}
-			Common.close(rs);
-			Common.close(stmt);
-			Common.close(conn);
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		Common.close(rs);
+		Common.close(stmt);
+		Common.close(conn);
 		return list;
 	}
 }
