@@ -12,15 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
 import com.plannet.dao.MemoDAO;
 import com.plannet.dao.WriteDAO;
+import com.plannet.vo.MemoVO;
+import com.plannet.vo.WriteVO;
 
 
-@WebServlet("/WriteSave")
-public class WriteSave extends HttpServlet {
+@WebServlet("/WriteLoad")
+public class WriteLoad extends HttpServlet {
    private static final long serialVersionUID = 1L;
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,17 +36,28 @@ public class WriteSave extends HttpServlet {
 
    @SuppressWarnings("unchecked")
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      request.setCharacterEncoding("utf-8");
-      Common.corsResSet(response);
-      StringBuffer sb = Common.reqStringBuff(request);
-      JSONObject jsonObj = Common.getJsonObj(sb);
-      
-      String getId = (String)jsonObj.get("id");
-      Date getDate = Date.valueOf((String) jsonObj.get("date"));
-      List<Map<String, Object>> getPlan = (List<Map<String, Object>>)jsonObj.get("plan");
-      String getDiary = (String)jsonObj.get("diary");
-      
-      WriteDAO dao = new WriteDAO();
-      dao.writeSave(getId, getDate, getPlan, getDiary);
+		request.setCharacterEncoding("utf-8");
+		response = Common.corsResSet(response);
+
+		StringBuffer sb = Common.reqStringBuff(request);
+		JSONObject jsonObj = Common.getJsonObj(sb);
+		
+		System.out.println("id : " + (String)jsonObj.get("id"));
+		String getId = (String)jsonObj.get("id");
+		Date getDate = Date.valueOf((String) jsonObj.get("date"));
+		
+		PrintWriter out = response.getWriter();
+		
+		WriteDAO dao = new WriteDAO();
+		List<WriteVO> list = dao.writeLoad(getId, getDate); 	
+		
+		JSONArray writeArray = new JSONArray();
+		for(WriteVO e : list) {
+			JSONObject resJson = new JSONObject();
+			resJson.put("plan", e.getPlan());
+			resJson.put("diary", e.getDiary());
+			writeArray.add(resJson);
+		}	
+		out.print(writeArray);
    }
 }

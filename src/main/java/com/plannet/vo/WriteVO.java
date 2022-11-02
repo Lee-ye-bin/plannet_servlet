@@ -2,11 +2,12 @@ package com.plannet.vo;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class WriteVO {
 	String id;
 	Date date;
-	List<String> plan;
+	List<Map<String, Object>> plan;
 	String diary;
 	
 	public String getId() {
@@ -21,10 +22,10 @@ public class WriteVO {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public List<String> getPlan() {
+	public List<Map<String, Object>> getPlan() {
 		return plan;
 	}
-	public void setPlan(List<String> plan) {
+	public void setPlan(List<Map<String, Object>> plan) {
 		this.plan = plan;
 	}
 	public String getDiary() {
