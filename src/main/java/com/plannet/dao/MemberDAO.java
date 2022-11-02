@@ -117,7 +117,7 @@ public class MemberDAO {
 
 	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel) {
 		int result = 0;
-		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL, JOIN_DATE) VALUES (?,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL) VALUES(?, ?, ?, ?, ?, ?);";
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
