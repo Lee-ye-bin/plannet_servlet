@@ -142,5 +142,51 @@ public class WriteDAO {
 		Common.close(pstmt);
 	    Common.close(conn);
 	}
+	
+	public  List<List<String>> planLoad(String id) {
+		List<List<String>> allPlan = new ArrayList<List<String>>();
+		try {
+			//리스트 가져오기
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			
+			String sqlEndPlan = "SELECT * FROM PLAN WHERE ID = '" + id + "' AND PLAN_CHECK = 1";
+			rs = stmt.executeQuery(sqlEndPlan);
+			
+			List<String> endPlan = new ArrayList<String>();
+			while(rs.next()) { // 읽은 데이타가 있으면 true
+				String date = (rs.getString("PLAN_DATE")).substring(0, 10);
+				endPlan.add(date);
+			}
+			
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			//-------------------------------------------------------------------------------------------
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			
+			String sqlDoPlan = "SELECT * FROM PLAN WHERE ID = '" + id + "' AND PLAN_CHECK = 0";
+			rs = stmt.executeQuery(sqlDoPlan);
+			
+			List<String> doPlan = new ArrayList<String>();
+			while(rs.next()) { // 읽은 데이타가 있으면 true
+				String date = (rs.getString("PLAN_DATE")).substring(0, 10);
+				doPlan.add(date);
+			}
+			
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			
+			allPlan.add(endPlan);
+			allPlan.add(doPlan);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return allPlan;
+	}
 
 }
