@@ -19,7 +19,6 @@ import org.json.simple.JSONObject;
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
-.
 
 @WebServlet("/BoardTitleServlet")
 public class BoardTitleServlet extends HttpServlet {
