@@ -26,7 +26,7 @@ public class UserInfoSave extends HttpServlet {
       Common.corsResSet(response);
    }
 
-//   @SuppressWarnings("unchecked")//
+//   @SuppressWarnings("unchecked")
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("utf-8");
       Common.corsResSet(response);
