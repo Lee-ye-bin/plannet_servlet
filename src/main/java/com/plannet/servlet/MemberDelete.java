@@ -15,8 +15,8 @@ import com.plannet.common.Common;
 import com.plannet.dao.MemberDAO;
 
 
-@WebServlet("/MemberRegServlet")
-public class MemberRegServlet extends HttpServlet {
+@WebServlet("/MemberDelete")
+public class MemberDelete extends HttpServlet {
    private static final long serialVersionUID = 1L;
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,15 +34,9 @@ public class MemberRegServlet extends HttpServlet {
       StringBuffer sb = Common.reqStringBuff(request);
       JSONObject jsonObj = Common.getJsonObj(sb);
       String getId = (String)jsonObj.get("id");
-      String getPwd = (String)jsonObj.get("pwd");
-      String getName = (String)jsonObj.get("name");
-      String getNickname = (String)jsonObj.get("nickname");
-      if(getNickname.length() == 0) getNickname = getName;
-      String getEmail = (String)jsonObj.get("email");
-      String getTel = (String)jsonObj.get("tel");
-      
+
       MemberDAO dao = new MemberDAO();
-      boolean rstComplete = dao.memberRegister(getId, getPwd, getName, getNickname, getEmail, getTel);
+      boolean rstComplete = dao.memberDelete(getId);
       
       PrintWriter out = response.getWriter();
       JSONObject resJson = new JSONObject();
