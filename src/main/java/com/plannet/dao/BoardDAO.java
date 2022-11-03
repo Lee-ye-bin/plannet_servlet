@@ -57,4 +57,28 @@ public class BoardDAO {
 		Common.close(conn);
 		return list;
 	}
+	
+		
+	public void boardWriteSave(int num, String id, String title, String nickname, String detail) {
+		// TODO Auto-generated method stub
+String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (?, ?, ?, ?, ?)";
+		
+		try {
+			conn = Common.getConnection();
+	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	pstmt.setInt(1, num);
+	    	pstmt.setString(2, id);
+	    	pstmt.setString(3, title);
+	    	pstmt.setString(4, nickname);
+	    	pstmt.setString(5, detail);
+	    	pstmt.executeUpdate();
+	    	System.out.println("글쓰기");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
+	}
+		
 }
