@@ -117,7 +117,7 @@ public class MemberDAO {
 
 	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel) {
 		int result = 0;
-		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL) VALUES(?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL) VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
@@ -138,6 +138,46 @@ public class MemberDAO {
 	    Common.close(conn);
 	    if(result == 1) return true;	
 	    else return false;
+	}
+	public boolean memberDelete(String id) {
+		try {
+			//보드 내용 삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sql = "DELETE FROM BOARD WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			//다이어리삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM DIARY WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			//플랜삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM PLAN WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			//다이어리삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM MEMBER WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	
