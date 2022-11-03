@@ -3,18 +3,19 @@ package com.plannet.vo;
 import java.sql.Date;
 
 public class BoardVO {
-	private int board_no;
+	private int num;
 	private String id;
-	private String nickname;
-	private int view;
 	private String title;
+	private String nickname;
+	private int views;
+	private String date;
 	private String detail;
-	private Date date;
-	public int getBoard_no() {
-		return board_no;
+	
+	public int getNum() {
+		return num;
 	}
-	public void setBoard_no(int board_no) {
-		this.board_no = board_no;
+	public void setNum(int num) {
+		this.num = num;
 	}
 	public String getId() {
 		return id;
@@ -28,30 +29,28 @@ public class BoardVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDetail() {
-		return detail;
-	}
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	public int getView() {
-		return view;
-	}
-	public void setView(int view) {
-		this.view = view;
-	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	
+	public int getViews() {
+		return views;
+	}
+	public void setViews(int views) {
+		this.views = views;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 }

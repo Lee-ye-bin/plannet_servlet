@@ -19,36 +19,35 @@ public class BoardDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 	
-	public List<BoardVO> board(int no){
+	public List<BoardVO> board(){
 		List<BoardVO> list = new ArrayList<>();
 		
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
-			String sql = "SELECT * FROM BOARD WHERE BOARD_NO = " + "'" + no + "'";
+			String sql = "SELECT * FROM BOARD ORDER BY BOARD_NO DESC";
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
-				
 				int sqlNo = rs.getInt("BOARD_NO");
 				String sqlId = rs.getString("ID");
 				String sqlTitle = rs.getString("TITLE");
+				String sqlNickname = rs.getString("NICKNAME");
 				int sqlViews=rs.getInt("VIEWS");
-				Date sqlDate = rs.getDate("WRITE_DATE");
+				String sqlDate = rs.getString("WRITE_DATE");
 				String sqlDetail = rs.getString("DETAIL");
-				
 				
 				System.out.println("BOARD_NO : " + sqlNo);
 				BoardVO vo = new BoardVO();
-				vo.setBoard_no(sqlNo);
+				vo.setNum(sqlNo);
 				vo.setId(sqlId);
 				vo.setTitle(sqlTitle);
-				vo.setView(sqlViews);
+				vo.setNickname(sqlNickname);
+				vo.setViews(sqlViews);
 				vo.setDate(sqlDate);
 				vo.setDetail(sqlDetail);
 				list.add(vo);
 			}
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
