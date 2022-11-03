@@ -18,7 +18,7 @@ import com.plannet.dao.BoardDAO;
 @WebServlet("/BoardWrite")
 public class BoardWrite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+       //
     public BoardWrite() {
         super();
     }
