@@ -1,4 +1,3 @@
-//
 package com.plannet.vo;
 
 import java.sql.Date;
