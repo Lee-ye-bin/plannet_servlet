@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
-
+//
 
 @WebServlet("/BoardWrite")
 public class BoardWrite extends HttpServlet {

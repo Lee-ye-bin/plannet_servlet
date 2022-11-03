@@ -62,7 +62,7 @@ public class BoardDAO {
 	public void boardWriteSave(int num, String id, String title, String nickname, String detail) {
 		// TODO Auto-generated method stub
 String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (?, ?, ?, ?, ?)";
-		
+		//
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
