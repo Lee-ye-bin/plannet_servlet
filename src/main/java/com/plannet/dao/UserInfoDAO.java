@@ -14,7 +14,7 @@ public class UserInfoDAO {
 	private Connection conn = null;
 	private Statement stmt = null; //표준 SQL문을 수행하기 위한 Statement 객체 얻기
 	private ResultSet rs = null; // Statement의 수행 결과를 여러행으로 받음
-	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행 //
+	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 
 	
