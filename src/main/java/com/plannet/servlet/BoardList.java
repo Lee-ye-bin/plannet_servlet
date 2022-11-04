@@ -41,6 +41,7 @@ public class BoardList extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list = dao.board();
 		
+		
 		PrintWriter out = response.getWriter();
 		JSONArray boardArray = new JSONArray();
 		for(BoardVO e : list) {

@@ -115,5 +115,6 @@ String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (
 		}
 		return list;
 	}
+	
 		
 }

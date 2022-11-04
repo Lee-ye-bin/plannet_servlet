@@ -64,4 +64,5 @@ public class BoardLoad extends HttpServlet {
 		}
 		out.print(boardLeadArray);
 	}	
+	
 }
