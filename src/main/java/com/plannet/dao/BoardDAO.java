@@ -59,7 +59,7 @@ public class BoardDAO {
 	}
 	
 		
-	public void boardWriteSave(int num, String id, String title, String nickname, String detail) {
+	public void boardCreateSave(int num, String id, String title, String nickname, String detail) {
 		// TODO Auto-generated method stub
 String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (?, ?, ?, ?, ?)";
 		//

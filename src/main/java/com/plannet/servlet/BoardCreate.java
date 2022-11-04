@@ -15,11 +15,11 @@ import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 //
 
-@WebServlet("/BoardWrite")
-public class BoardWrite extends HttpServlet {
+@WebServlet("/BoardCreate")
+public class BoardCreate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
-    public BoardWrite() {
+    public BoardCreate() {
         super();
     }
 
@@ -44,7 +44,7 @@ public class BoardWrite extends HttpServlet {
      
      
      BoardDAO dao = new BoardDAO();
-     dao.boardWriteSave(getNum, getId, getTitle, getNickname, getDetail);
+     dao.boardCreateSave(getNum, getId, getTitle, getNickname, getDetail);
   }
 }
 
