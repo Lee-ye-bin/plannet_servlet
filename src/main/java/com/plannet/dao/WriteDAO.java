@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,7 +163,7 @@ public class WriteDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			//-------------------------------------------------------------------------------------------
+		
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			
@@ -187,6 +188,44 @@ public class WriteDAO {
 		}
 		
 		return allPlan;
+	}
+	public  Map<String, List<Map<String, Object>>> weekList(String id) {
+		Map<String, List<Map<String, Object>>> weekList = new LinkedHashMap<String, List<Map<String, Object>>>();
+		List<Map<String, Object>> dayList = new ArrayList<Map<String, Object>>();
+		
+		
+		try {
+			for(int i = 0; i < 7; i++) {
+				conn = Common.getConnection();
+				stmt = conn.createStatement(); // Statement 객체 얻기
+				
+				String sql = "SELECT * FROM PLAN WHERE PLAN_DATE = (SELECT TRUNC(sysdate, 'd')+" + i + " FROM DUAL) AND ID = '" + id +  "'";
+				String[] weekday = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+				
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) { // 읽은 데이타가 있으면 true	
+					Map<String, Object> listItem = new LinkedHashMap<String, Object>();
+					listItem.put("no", rs.getString("PLAN_NO"));
+					listItem.put("plan", rs.getString("PLAN"));
+					listItem.put("checked", rs.getString("PLAN_CHECK"));
+					dayList.add(listItem);
+				}
+				
+				Common.close(rs);
+				Common.close(stmt);
+				Common.close(conn);
+				
+				weekList.put(weekday[i], dayList);
+				
+				dayList = Collections.emptyList();
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return weekList;
 	}
 
 }
