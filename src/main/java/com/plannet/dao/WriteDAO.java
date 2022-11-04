@@ -163,7 +163,7 @@ public class WriteDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			//-------------------------------------------------------------------------------------------
+		
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			

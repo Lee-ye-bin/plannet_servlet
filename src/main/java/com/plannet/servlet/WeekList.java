@@ -31,7 +31,7 @@ public class WeekList extends HttpServlet {
    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       Common.corsResSet(response);
    }
-
+//
    @SuppressWarnings("unchecked")
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
