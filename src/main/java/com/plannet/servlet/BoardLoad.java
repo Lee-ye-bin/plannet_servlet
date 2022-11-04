@@ -18,12 +18,12 @@ import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
 
 
-@WebServlet("/BoardBody")
-public class BoardBody extends HttpServlet {
+@WebServlet("/BoardLoad")
+public class BoardLoad extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-    public BoardBody() {
+    public BoardLoad() {
         super();
         
     }
@@ -35,28 +35,33 @@ public class BoardBody extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
+		StringBuffer sb = Common.reqStringBuff(request);
+		JSONObject jsonObj = Common.getJsonObj(sb);
+		
+		String reqNum = (String)jsonObj.get("num");
+		int inNum = Integer.parseInt(reqNum);
+		System.out.println("전달 받은 num : " + reqNum);
 		
 		BoardDAO dao = new BoardDAO();
-		List<BoardVO> list = dao.board();
-		
+		List<BoardVO> list =dao.boardLead(inNum);
 		PrintWriter out = response.getWriter();
-		JSONArray boardBodyArray = new JSONArray();
+		JSONArray boardLeadArray = new JSONArray();
 		
 		for(BoardVO e : list) {
-			JSONObject boardMain = new JSONObject();
-			boardMain.put("num", e.getNum());
-			boardMain.put("id", e.getId());
-			boardMain.put("title", e.getTitle());
-			boardMain.put("nickname", e.getNickname());
-			boardMain.put("views", e.getViews());
-			boardMain.put("date", e.getDate());
-			boardMain.put("detail", e.getDetail());
-			boardBodyArray.add(boardMain);
-		}	
-		out.print(boardBodyArray);
-	}
-
+			JSONObject boardStr = new JSONObject();
+			boardStr.put("num", e.getNum());
+			boardStr.put("id", e.getId());
+			boardStr.put("title", e.getTitle());
+			boardStr.put("nickname", e.getNickname());
+			boardStr.put("views", e.getViews());
+			boardStr.put("date", e.getDate());
+			boardStr.put("detail", e.getDetail());
+			boardLeadArray.add(boardStr);
+		}
+		out.print(boardLeadArray);
+	}	
 }

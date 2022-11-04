@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.plannet.common.Common;
 import com.plannet.vo.BoardVO;
+import com.plannet.vo.MemberVO;
 
 
 public class BoardDAO {
@@ -79,6 +80,40 @@ String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (
 		Common.close(rs);
 		Common.close(pstmt);
 	    Common.close(conn);
+	}
+	
+	public List<BoardVO> boardLead(Integer num) {
+		List<BoardVO> list = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM BOARD WHERE BOARD_NO ="+"'"+num+"'";
+			conn = Common.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int sqlNo = rs.getInt("BOARD_NO");
+				String sqlId = rs.getString("ID");
+				String sqlTitle = rs.getString("TITLE");
+				String sqlNickname = rs.getString("NICKNAME");
+				int sqlViews=rs.getInt("VIEWS");
+				String sqlDate = rs.getString("WRITE_DATE");
+				String sqlDetail = rs.getString("DETAIL");
+				
+				System.out.println("BOARD_NO : " + sqlNo);
+				BoardVO vo = new BoardVO();
+				vo.setNum(sqlNo);
+				vo.setId(sqlId);
+				vo.setTitle(sqlTitle);
+				vo.setNickname(sqlNickname);
+				vo.setViews(sqlViews);
+				vo.setDate(sqlDate);
+				vo.setDetail(sqlDetail);
+				list.add(vo);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 		
 }
