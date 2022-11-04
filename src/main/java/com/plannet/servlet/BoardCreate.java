@@ -36,15 +36,14 @@ public class BoardCreate extends HttpServlet {
      Common.corsResSet(response);
      StringBuffer sb = Common.reqStringBuff(request);
      JSONObject jsonObj = Common.getJsonObj(sb);
-     int getNum = (int)jsonObj.get("num");
+     
      String getId = (String)jsonObj.get("id");
      String getTitle = (String)jsonObj.get("title");
-     String getNickname = (String)jsonObj.get("nickname");
      String getDetail = (String)jsonObj.get("detail");
-     
+     boolean isChecked = (boolean)jsonObj.get("isChecked");
      
      BoardDAO dao = new BoardDAO();
-     dao.boardCreateSave(getNum, getId, getTitle, getNickname, getDetail);
+     dao.boardCreate(getId, getTitle, getDetail, isChecked);
   }
 }
 

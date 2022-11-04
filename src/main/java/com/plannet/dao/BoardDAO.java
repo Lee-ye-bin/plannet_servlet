@@ -59,18 +59,35 @@ public class BoardDAO {
 	}
 	
 		
-	public void boardCreateSave(int num, String id, String title, String nickname, String detail) {
+	public void boardCreate(String id, String title, String detail, boolean isChecked) {
 		// TODO Auto-generated method stub
-String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (BOARD_NO_SEQ.NEXTVAL, ?, ?, ?, ?)";
 		//
 		try {
+			String nickname = "";
+			
+			if (!isChecked) {
+				conn = Common.getConnection();
+				stmt = conn.createStatement();// 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+				String nicknameSql = "SELECT NICKNAME FROM MEMBER WHERE ID = " + "'" + id + "'";
+				rs = stmt.executeQuery(nicknameSql);
+				
+				while(rs.next()) {
+					nickname = rs.getString("NICKNAME");
+				}
+				
+				Common.close(rs);
+				Common.close(stmt);
+			    Common.close(conn);
+		    }
+			else nickname = "익명";
+			
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
-	    	pstmt.setInt(1, num);
-	    	pstmt.setString(2, id);
-	    	pstmt.setString(3, title);
-	    	pstmt.setString(4, nickname);
-	    	pstmt.setString(5, detail);
+	    	pstmt.setString(1, id);
+	    	pstmt.setString(2, title);
+	    	pstmt.setString(3, nickname);;
+	    	pstmt.setString(4, detail);
 	    	pstmt.executeUpdate();
 	    	System.out.println("글쓰기");
 		} catch (Exception e) {

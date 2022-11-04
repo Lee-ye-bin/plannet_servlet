@@ -10,6 +10,7 @@ public class BoardVO {
 	private int views;
 	private String date;
 	private String detail;
+	private boolean checked;
 	
 	public int getNum() {
 		return num;
@@ -52,5 +53,11 @@ public class BoardVO {
 	}
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+	public boolean isChecked() {
+		return checked;
+	}
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 }
