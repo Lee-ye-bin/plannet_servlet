@@ -191,7 +191,7 @@ public class WriteDAO {
 	}
 	public  Map<String, List<Map<String, Object>>> weekList(String id) {
 		Map<String, List<Map<String, Object>>> weekList = new LinkedHashMap<String, List<Map<String, Object>>>();
-		List<Map<String, Object>> dayList = new ArrayList<Map<String, Object>>();
+		
 		
 		
 		try {
@@ -204,6 +204,7 @@ public class WriteDAO {
 				
 				rs = stmt.executeQuery(sql);
 				
+				List<Map<String, Object>> dayList = new ArrayList<Map<String, Object>>();
 				while(rs.next()) { // 읽은 데이타가 있으면 true	
 					Map<String, Object> listItem = new LinkedHashMap<String, Object>();
 					listItem.put("no", rs.getString("PLAN_NO"));
@@ -217,8 +218,6 @@ public class WriteDAO {
 				Common.close(conn);
 				
 				weekList.put(weekday[i], dayList);
-				
-				dayList = Collections.emptyList();
 			}
 
 		} catch(Exception e) {
