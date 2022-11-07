@@ -33,12 +33,14 @@ public class UserInfoDAO {
 				String sqlPhone = rs.getString("TEL");
 				String sqlSNS = rs.getString("SNS");
 				String sqlProfile = rs.getString("PROFILE");
+				String sqlImg = rs.getString("PRO_IMG");
 				MemberVO vo = new MemberVO();
 				vo.setNickname(sqlNickname);
 				vo.setEmail(sqlEmail);
 				vo.setTel(sqlPhone);
 				vo.setSns(sqlSNS);
 				vo.setProfile(sqlProfile);
+				vo.setImg(sqlImg);
 				list.add(vo);
 			}
 			
