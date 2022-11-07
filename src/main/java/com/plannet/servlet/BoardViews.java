@@ -40,4 +40,5 @@ public class BoardViews extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		dao.boardViews(inNum);
 	}
+	
 }

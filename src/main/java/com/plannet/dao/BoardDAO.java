@@ -161,5 +161,6 @@ public class BoardDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 }
