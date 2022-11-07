@@ -15,6 +15,7 @@ public class MemberVO {
 	private String sns;
 	private String profile;
 	private String img;
+	private boolean isReg;
 	
 	public String getId() {
 		return id;
@@ -88,6 +89,13 @@ public class MemberVO {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	public boolean isReg() {
+		return isReg;
+	}
+	public void setReg(boolean isReg) {
+		this.isReg = isReg;
+	}
+	
 	
 }
 

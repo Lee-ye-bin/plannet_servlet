@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.plannet.common.Common;
+import com.plannet.vo.BoardVO;
 import com.plannet.vo.MemberVO;
 
 public class MemberDAO {
@@ -180,6 +181,63 @@ public class MemberDAO {
 		return true;
 	}
 	
-	
+	//아이디비밀번호 찾기
+	public List<MemberVO> memberFindCheck(String uni, String email, String type) { 
+		List<MemberVO> list = new ArrayList<>();
+		try {
+			MemberVO vo = new MemberVO();
+			String sql = "";
+			conn = Common.getConnection();
+			stmt = conn.createStatement();
+			char t = type.charAt(5);
+			switch (t) {
+				case 'I' : 
+					sql = "SELECT * FROM MEMBER WHERE NAME = '"+ uni +"' AND EMAIL = '" + email  + "'";
+					rs = stmt.executeQuery(sql);
+					if(rs.next()) {
+						vo.setReg(true);
+						vo.setId(rs.getString("ID"));
+					} else vo.setReg(false);
+					list.add(vo);
+					break;
+				case 'P' : 
+					sql = "SELECT * FROM MEMBER WHERE ID = '"+ uni +"' AND EMAIL = '" + email  + "'";
+					rs = stmt.executeQuery(sql);
+					if(rs.next()) vo.setReg(true);
+					else vo.setReg(false);
+					list.add(vo);
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs); // close 한 뒤에 return 해야 함 
+		Common.close(stmt);
+		Common.close(conn);
+		return list; // 가입 되어 있으면 true, 가입이 안 되어 있으면 false 
+	}
+	//새 비밀번호
+	public boolean memberNewPwd(String id, String pwd) {
+		int result = 0;
+		try {
+			String sql = "UPDATE MEMBER SET PWD = ? WHERE ID = ?";
+			
+			conn = Common.getConnection();
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setString(1, pwd);
+	    	pstmt.setString(2, id);
+	    	result = pstmt.executeUpdate();
+
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			return true;
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		if(result == 1) return true;
+		else return false;
+	}
 	
 }
