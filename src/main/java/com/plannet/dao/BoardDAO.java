@@ -133,5 +133,20 @@ public class BoardDAO {
 		return list;
 	}
 	
-		
+	public boolean boardDelete(String id, int num) {
+		try {
+			//보드 내용 삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sql = "DELETE FROM BOARD WHERE ID = '" + num + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }
