@@ -157,9 +157,9 @@ public class BoardDAO {
 	public void boardEdit(String id, int num, String title, String detail) {
 		System.out.println("여기는왔니?");
 		System.out.println("dddddddddddddddddddddddddd" + id);
-	     System.out.println("dddddddddddddddddddddddddd" + num);
-	     System.out.println("dddddddddddddddddddddddddd" + title);
-	     System.out.println("dddddddddddddddddddddddddd" + detail);
+	    System.out.println("dddddddddddddddddddddddddd" + num);
+	    System.out.println("dddddddddddddddddddddddddd" + title);
+	    System.out.println("dddddddddddddddddddddddddd" + detail);
 		String sql = "UPDATE BOARD SET TITLE = ?, DETAIL = ? WHERE BOARD_NO = ?";
 		
 		try {
