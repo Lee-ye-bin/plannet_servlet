@@ -37,20 +37,17 @@ public class BoardLoad extends HttpServlet {
 //
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
 		StringBuffer sb = Common.reqStringBuff(request);
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String reqNum = (String)jsonObj.get("num");
 		int inNum = Integer.parseInt(reqNum);
 		System.out.println("전달 받은 num : " + reqNum);
-		
-		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list =dao.boardLead(inNum);
 		PrintWriter out = response.getWriter();
 		JSONArray boardLeadArray = new JSONArray();
-		
 		for(BoardVO e : list) {
 			JSONObject boardStr = new JSONObject();
 			boardStr.put("num", e.getNum());

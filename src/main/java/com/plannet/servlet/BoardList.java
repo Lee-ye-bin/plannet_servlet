@@ -37,11 +37,8 @@ public class BoardList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
-		
 		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list = dao.board();
-		
-		
 		PrintWriter out = response.getWriter();
 		JSONArray boardArray = new JSONArray();
 		for(BoardVO e : list) {

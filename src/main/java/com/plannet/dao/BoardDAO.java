@@ -106,7 +106,6 @@ public class BoardDAO {
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
-			
 			while(rs.next()) {
 				int sqlNo = rs.getInt("BOARD_NO");
 				String sqlId = rs.getString("ID");
@@ -130,8 +129,10 @@ public class BoardDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
 		return list;
 	}
-	
-		
+
 }
