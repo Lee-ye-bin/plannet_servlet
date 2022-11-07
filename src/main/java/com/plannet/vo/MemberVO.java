@@ -14,6 +14,7 @@ public class MemberVO {
 	private String memo;
 	private String sns;
 	private String profile;
+	private String img;
 	
 	public String getId() {
 		return id;
@@ -81,5 +82,12 @@ public class MemberVO {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
 }
 

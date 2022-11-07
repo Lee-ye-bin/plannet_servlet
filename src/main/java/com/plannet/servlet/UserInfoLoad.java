@@ -59,6 +59,7 @@ public class UserInfoLoad extends HttpServlet {
 			info.put("phone", e.getTel());
 			info.put("sns", e.getSns());
 			info.put("profile", e.getProfile());
+			info.put("img", e.getImg());
 			infoArray.add(info);
 		}	
 		out.print(infoArray);
