@@ -1,5 +1,4 @@
 package com.plannet.dao;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -11,7 +10,6 @@ import java.util.List;
 import com.plannet.common.Common;
 import com.plannet.vo.BoardVO;
 import com.plannet.vo.MemberVO;
-
 
 public class BoardDAO {
 	private Connection conn = null;
