@@ -110,4 +110,21 @@ public class UserInfoDAO {
 		
 
 	}
+	public void userImgSave(String id, String imgName) {
+		String sqlNickUdate = "UPDATE MEMBER SET PRO_IMG=? WHERE ID = ?";
+		try {
+			conn = Common.getConnection();
+			pstmt = conn.prepareStatement(sqlNickUdate); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	pstmt.setString(1, imgName);
+	    	pstmt.setString(2, id);
+
+	    	pstmt.executeUpdate();
+	    	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
+	}
 }

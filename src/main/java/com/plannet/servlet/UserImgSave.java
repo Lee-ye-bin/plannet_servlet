@@ -37,13 +37,7 @@ public class UserImgSave extends HttpServlet {
       String getId = (String)jsonObj.get("id");
       String getImgName = (String)jsonObj.get("imgName");
       
-	PrintWriter out = response.getWriter();
-      
       UserInfoDAO dao = new UserInfoDAO();
-      String imgName = dao.userImgSave(getId, getImgName);
-      
-      JSONObject resJson = new JSONObject();
-      resJson.put("imgName", imgName);
-      out.print(resJson);
+      dao.userImgSave(getId, getImgName);
    }
 }
