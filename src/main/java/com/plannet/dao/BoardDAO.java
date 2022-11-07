@@ -105,7 +105,6 @@ public class BoardDAO {
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
-			
 			while(rs.next()) {
 				int sqlNo = rs.getInt("BOARD_NO");
 				String sqlId = rs.getString("ID");
@@ -131,6 +130,9 @@ public class BoardDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
 		return list;
 	}
 	
@@ -175,5 +177,18 @@ public class BoardDAO {
 		Common.close(rs);
 		Common.close(pstmt);
 	    Common.close(conn);
+	}
+	
+	public void boardViews(int num) {
+		String sql ="UPDATE BOARD SET VIEWS=VIEWS+1 WHERE BOARD_NO = " + "'"+num+"'";
+		try {
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			stmt.executeQuery(sql);
+			Common.close(stmt);
+			Common.close(conn);
+		}catch(Exception e) {
+				e.printStackTrace();
+		}
 	}
 }
