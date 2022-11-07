@@ -30,7 +30,6 @@ public class MemoDAO {
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				String sqlMemo = rs.getString("MEMO");
 				String sqlId = rs.getString("ID");
-				System.out.println("MEMO : " + sqlMemo);
 				MemberVO vo = new MemberVO();
 				vo.setId(sqlId);
 				vo.setMemo(sqlMemo);
@@ -54,7 +53,6 @@ public class MemoDAO {
 	    	pstmt.setString(1, memo);
 	    	pstmt.setString(2, id);
 	    	pstmt.executeUpdate();
-	    	System.out.println("메모저장");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

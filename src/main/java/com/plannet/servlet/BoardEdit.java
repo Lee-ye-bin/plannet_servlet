@@ -39,10 +39,6 @@ public class BoardEdit extends HttpServlet {
      int getNum = Integer.parseInt(reqNum);
      String getTitle = (String)jsonObj.get("title");
      String getDetail = (String)jsonObj.get("detail");
-     System.out.println("dddddddddddddddddddddddddd" + getId);
-     System.out.println("dddddddddddddddddddddddddd" + getNum);
-     System.out.println("dddddddddddddddddddddddddd" + getTitle);
-     System.out.println("dddddddddddddddddddddddddd" + getDetail);
      
      BoardDAO dao = new BoardDAO();
      dao.boardEdit(getId, getNum, getTitle, getDetail);

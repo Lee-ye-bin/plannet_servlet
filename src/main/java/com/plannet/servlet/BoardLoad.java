@@ -59,7 +59,6 @@ public class BoardLoad extends HttpServlet {
 			boardStr.put("date", e.getDate());
 			boardStr.put("detail", e.getDetail());
 			boardStr.put("isChecked", e.isChecked());
-			System.out.print(boardStr);
 			boardLeadArray.add(boardStr);
 		}
 		out.print(boardLeadArray);

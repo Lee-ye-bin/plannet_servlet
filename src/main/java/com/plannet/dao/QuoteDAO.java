@@ -25,7 +25,6 @@ public class QuoteDAO {
 			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				sqlQuote = rs.getString("QUOTE"); // 쿼리문 수행 결과에서 QUOTE 값을 가져옴
-				System.out.println("QUOTE : " + sqlQuote);
 			}
 			Common.close(rs);
 			Common.close(stmt);

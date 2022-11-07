@@ -36,7 +36,6 @@ public class BoardDAO {
 				String sqlDate = rs.getString("WRITE_DATE");
 				String sqlDetail = rs.getString("DETAIL");
 				
-				System.out.println("BOARD_NO : " + sqlNo);
 				BoardVO vo = new BoardVO();
 				vo.setNum(sqlNo);
 				vo.setId(sqlId);
@@ -89,7 +88,6 @@ public class BoardDAO {
 	    	if (isChecked) pstmt.setInt(5, 1);
 	    	else pstmt.setInt(5, 0);
 	    	pstmt.executeUpdate();
-	    	System.out.println("글쓰기");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,7 +113,6 @@ public class BoardDAO {
 				String sqlDetail = rs.getString("DETAIL");
 				boolean sqlChecked = rs.getBoolean("ISCHECKED");
 				
-				System.out.println("BOARD_NO : " + sqlNo);
 				BoardVO vo = new BoardVO();
 				vo.setNum(sqlNo);
 				vo.setId(sqlId);
@@ -155,11 +152,6 @@ public class BoardDAO {
 	
 	// 보드 업데이트
 	public void boardEdit(String id, int num, String title, String detail) {
-		System.out.println("여기는왔니?");
-		System.out.println("dddddddddddddddddddddddddd" + id);
-	    System.out.println("dddddddddddddddddddddddddd" + num);
-	    System.out.println("dddddddddddddddddddddddddd" + title);
-	    System.out.println("dddddddddddddddddddddddddd" + detail);
 		String sql = "UPDATE BOARD SET TITLE = ?, DETAIL = ? WHERE BOARD_NO = ?";
 		
 		try {

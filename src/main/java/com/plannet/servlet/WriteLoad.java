@@ -39,7 +39,6 @@ public class WriteLoad extends HttpServlet {
 		StringBuffer sb = Common.reqStringBuff(request);
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		
-		System.out.println("id : " + (String)jsonObj.get("id"));
 		String getId = (String)jsonObj.get("id");
 		Date getDate = Date.valueOf((String) jsonObj.get("date"));
 		

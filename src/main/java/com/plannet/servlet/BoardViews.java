@@ -36,7 +36,6 @@ public class BoardViews extends HttpServlet {
 	    JSONObject jsonObj = Common.getJsonObj(sb);
 	    String reqNum = (String)jsonObj.get("num");
 		int inNum = Integer.parseInt(reqNum);
-		System.out.println("전달 받은 num : " + reqNum);
 		BoardDAO dao = new BoardDAO();
 		dao.boardViews(inNum);
 	}

@@ -35,7 +35,6 @@ public class MemberCheck extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		boolean isNotReg = dao.regUniCheck(getUni, getType); // isNotReg = TRUE 이면 가입이 안 된 경우를 나타냄
-		System.out.println("DB 조회 결과값 : " + isNotReg);
 		
 		PrintWriter out = response.getWriter();
 		JSONObject resJson = new JSONObject();
