@@ -150,4 +150,16 @@ public class BoardDAO {
 		}
 		return true;
 	}
+	public void boardViews(int num) {
+		String sql ="UPDATE BOARD SET VIEWS=VIEWS+1 WHERE BOARD_NO = " + "'"+num+"'";
+		try {
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			stmt.executeQuery(sql);
+			Common.close(stmt);
+			Common.close(conn);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
