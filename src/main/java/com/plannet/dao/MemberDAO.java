@@ -216,7 +216,7 @@ public class MemberDAO {
 		Common.close(conn);
 		return list; // 가입 되어 있으면 true, 가입이 안 되어 있으면 false 
 	}
-	//새 비밀번호
+	//새 비밀번호//
 	public boolean memberNewPwd(String id, String pwd) {
 		int result = 0;
 		try {

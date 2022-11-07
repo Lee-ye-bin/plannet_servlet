@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
 import com.plannet.dao.MemberDAO;
-import com.plannet.vo.MemberVO;
 
 @WebServlet("/MemberNewPwd")
 public class MemberNewPwd extends HttpServlet {
@@ -26,7 +24,7 @@ public class MemberNewPwd extends HttpServlet {
 		Common.corsResSet(response);
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")//
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
