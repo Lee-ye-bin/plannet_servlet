@@ -16,6 +16,7 @@ import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
 
+
 @WebServlet("/BoardList")
 public class BoardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;

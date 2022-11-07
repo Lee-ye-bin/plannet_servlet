@@ -1,5 +1,4 @@
 package com.plannet.servlet;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,7 +12,7 @@ import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
-//
+
 
 @WebServlet("/BoardCreate")
 public class BoardCreate extends HttpServlet {

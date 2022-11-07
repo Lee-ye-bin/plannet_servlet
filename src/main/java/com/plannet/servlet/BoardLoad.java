@@ -18,6 +18,7 @@ import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
 
 
+
 @WebServlet("/BoardLoad")
 public class BoardLoad extends HttpServlet {
 	private static final long serialVersionUID = 1L;

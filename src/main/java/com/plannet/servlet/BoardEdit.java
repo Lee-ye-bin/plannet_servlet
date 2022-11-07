@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 
+
 @WebServlet("/BoardEdit")
 public class BoardEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
