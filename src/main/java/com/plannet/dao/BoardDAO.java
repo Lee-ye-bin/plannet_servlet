@@ -1,4 +1,3 @@
-//
 package com.plannet.dao;
 
 import java.sql.Connection;
@@ -134,5 +133,21 @@ public class BoardDAO {
 	    Common.close(conn);
 		return list;
 	}
-
+	
+	public boolean boardDelete(int num) {
+		try {
+			//보드 내용 삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sql = "DELETE FROM BOARD WHERE BOARD_NO = " + num;
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }
