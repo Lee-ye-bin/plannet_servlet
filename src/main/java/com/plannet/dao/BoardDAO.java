@@ -61,7 +61,7 @@ public class BoardDAO {
 		
 	public void boardCreate(String id, String title, String detail, boolean isChecked) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL) VALUES (BOARD_NO_SEQ.NEXTVAL, ?, ?, ?, ?)";
+		String sql = "INSERT INTO BOARD (BOARD_NO, ID, TITLE, NICKNAME, DETAIL, ISCHECKED) VALUES (BOARD_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
 		//
 		try {
 			String nickname = "";
@@ -88,6 +88,8 @@ public class BoardDAO {
 	    	pstmt.setString(2, title);
 	    	pstmt.setString(3, nickname);;
 	    	pstmt.setString(4, detail);
+	    	if (isChecked) pstmt.setInt(5, 1);
+	    	else pstmt.setInt(5, 0);
 	    	pstmt.executeUpdate();
 	    	System.out.println("글쓰기");
 		} catch (Exception e) {
@@ -114,6 +116,7 @@ public class BoardDAO {
 				int sqlViews=rs.getInt("VIEWS");
 				String sqlDate = rs.getString("WRITE_DATE");
 				String sqlDetail = rs.getString("DETAIL");
+				boolean sqlChecked = rs.getBoolean("ISCHECKED");
 				
 				System.out.println("BOARD_NO : " + sqlNo);
 				BoardVO vo = new BoardVO();
@@ -124,6 +127,7 @@ public class BoardDAO {
 				vo.setViews(sqlViews);
 				vo.setDate(sqlDate);
 				vo.setDetail(sqlDetail);
+				vo.setChecked(sqlChecked);
 				list.add(vo);
 			}
 		}catch(Exception e) {
@@ -147,5 +151,31 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	// 보드 업데이트
+	public void boardEdit(String id, int num, String title, String detail) {
+		System.out.println("여기는왔니?");
+		System.out.println("dddddddddddddddddddddddddd" + id);
+	     System.out.println("dddddddddddddddddddddddddd" + num);
+	     System.out.println("dddddddddddddddddddddddddd" + title);
+	     System.out.println("dddddddddddddddddddddddddd" + detail);
+		String sql = "UPDATE BOARD SET TITLE = ?, DETAIL = ? WHERE BOARD_NO = ?";
+		
+		try {
+			conn = Common.getConnection();
+			pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
+	    	pstmt.setString(1, title);
+	    	pstmt.setString(2, detail);
+	    	pstmt.setInt(3, num);
+
+	    	pstmt.executeUpdate();
+	    	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Common.close(rs);
+		Common.close(pstmt);
+	    Common.close(conn);
 	}
 }
