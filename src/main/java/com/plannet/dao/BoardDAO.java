@@ -111,8 +111,8 @@ public class BoardDAO {
 	    		StringBuffer updateSql = new StringBuffer("");
 	    		// 업데이트 구문
 	    		System.out.println(detail.length());
-	    		int cnt = ((detail.getBytes("UTF-8").length)/4000) + 1; // 몇번 ||을 해야하는지
-	    		int beginIdx = 0, maxByte = 4000; // 시작인덱스, 자르는 기준 바이트 수
+	    		int cnt = ((detail.getBytes("UTF-8").length)/3800) + 1; // 몇번 ||을 해야하는지
+	    		int beginIdx = 0, maxByte = 3800; // 시작인덱스, 자르는 기준 바이트 수
 	    		
 	    		int slen = 0, blen = 0; // str의 length(endIdx로 사용), byte기준 length
 	    		char c; // 잘리는 마지막 글자
@@ -129,9 +129,6 @@ public class BoardDAO {
 	    			else updateSql.append("|| TO_CLOB('" + detail.substring(beginIdx, slen) + "')");
 	    			beginIdx = slen;
 	    			maxByte += blen;
-	    			
-	    			System.out.println("FOR문 안에있음" + updateSql);
-	    			System.out.println("한번 돌았다");
 	    		}	    		
 	    		detailSql = "UPDATE BOARD SET DETAIL = " + updateSql + "WHERE BOARD_NO =" + boardNo;
 	    	} else {
@@ -209,21 +206,66 @@ public class BoardDAO {
 	
 	// 작성한 게시물 수정
 	public void boardEdit(String id, int num, String title, String detail) {
-		String sql = "UPDATE BOARD SET TITLE = ?, DETAIL = ? WHERE BOARD_NO = ?";
+		String sql = "UPDATE BOARD SET TITLE = ? WHERE BOARD_NO = ?";
 		
 		try {
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
 	    	pstmt.setString(1, title);
-	    	pstmt.setString(2, detail);
-	    	pstmt.setInt(3, num);
-	    	pstmt.executeUpdate();	
+	    	pstmt.setInt(2, num);
+	    	pstmt.executeUpdate();
+	    	
+	    	Common.close(rs);
+			Common.close(pstmt);
+			Common.close(conn);
+	    	
+	    	// 디테일 업데이트 구문
+		    conn = Common.getConnection();
+			stmt = conn.createStatement();
+			String detailSql = ""; 
+			
+			// 4000바이트가 넘으면
+	    	if(detail.getBytes("UTF-8").length > 4000) {
+	    		StringBuffer updateSql = new StringBuffer("");
+	    		// 업데이트 구문
+	    		System.out.println(detail.length());
+	    		int cnt = ((detail.getBytes("UTF-8").length)/3800) + 1; // 몇번 ||을 해야하는지
+	    		int beginIdx = 0, maxByte = 3800; // 시작인덱스, 자르는 기준 바이트 수
+	    		
+	    		int slen = 0, blen = 0; // str의 length(endIdx로 사용), byte기준 length
+	    		char c; // 잘리는 마지막 글자
+	    		
+	    		for(int i = 0; i < cnt; i++) { 
+	    			while(blen + 1 < maxByte - 1 && slen < detail.length() - 1) { //합한 바이트의 수가 maxbyte를 넘지 않을때까지
+	    				c = detail.charAt(slen);
+	    				slen++;
+	    				if(c > 127) blen += 3; //아스키코드 기준으로 1바이트 이상의 문자가 들어올경우
+	    				else blen++;
+	    			} // while 끝
+	    			
+	    			if(i == 0) updateSql.append("TO_CLOB('" + detail.substring(beginIdx, slen) + "')");
+	    			else updateSql.append("|| TO_CLOB('" + detail.substring(beginIdx, slen) + "')");
+	    			beginIdx = slen;
+	    			maxByte += blen;
+	    		}	    		
+	    		detailSql = "UPDATE BOARD SET DETAIL = " + updateSql + "WHERE BOARD_NO =" + num;
+	    	} else {
+	    		detailSql = "UPDATE BOARD SET DETAIL = TO_CLOB('" + detail + "') WHERE BOARD_NO =" + num;
+	    	}
+	    	stmt.executeUpdate(detailSql);
+	    	Common.close(rs);
+			Common.close(stmt);
+		    Common.close(conn);
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Common.close(rs);
-		Common.close(pstmt);
-		Common.close(conn);
+		
 	}
 	
 	// 게시물 조회수
