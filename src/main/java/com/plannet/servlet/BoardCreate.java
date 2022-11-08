@@ -39,6 +39,7 @@ public class BoardCreate extends HttpServlet {
      String getId = (String)jsonObj.get("id");
      String getTitle = (String)jsonObj.get("title");
      String getDetail = (String)jsonObj.get("detail");
+     System.out.println(getDetail);
      boolean isChecked = (boolean)jsonObj.get("isChecked");
      
      BoardDAO dao = new BoardDAO();

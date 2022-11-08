@@ -46,7 +46,7 @@ public class BoardLoad extends HttpServlet {
 		String reqNum = (String)jsonObj.get("num");
 		int inNum = Integer.parseInt(reqNum);
 		System.out.println("전달 받은 num : " + reqNum);
-		List<BoardVO> list =dao.boardLead(inNum);
+		List<BoardVO> list =dao.boardLoad(inNum);
 		PrintWriter out = response.getWriter();
 		JSONArray boardLeadArray = new JSONArray();
 		for(BoardVO e : list) {

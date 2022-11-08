@@ -38,7 +38,7 @@ public class BoardList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
 		BoardDAO dao = new BoardDAO();
-		List<BoardVO> list = dao.board();
+		List<BoardVO> list = dao.boardList();
 		PrintWriter out = response.getWriter();
 		JSONArray boardArray = new JSONArray();
 		for(BoardVO e : list) {
@@ -49,7 +49,6 @@ public class BoardList extends HttpServlet {
 			boardText.put("nickname", e.getNickname());
 			boardText.put("views", e.getViews());
 			boardText.put("date", e.getDate());
-			boardText.put("detail", e.getDetail());
 			boardArray.add(boardText);
 		}	
 		out.print(boardArray);
