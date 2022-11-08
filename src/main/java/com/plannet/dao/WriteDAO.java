@@ -99,7 +99,6 @@ public class WriteDAO {
 	    	
 	    	for(Map<String, Object> p : plan) {
 	    		boolean deleted = (boolean) p.get("deleted");
-	    		//System.out.println(p.get("deleted"));
 	    		if(deleted == false) {
 	    			pstmt = conn.prepareStatement(sqlListInsert); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
 	    	    	pstmt.setString(1, id);

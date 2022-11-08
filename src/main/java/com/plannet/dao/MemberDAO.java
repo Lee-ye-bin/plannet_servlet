@@ -28,8 +28,6 @@ public class MemberDAO {
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				String sqlId = rs.getString("ID"); // 쿼리문 수행 결과에서 ID값을 가져옴
 				String sqlPwd = rs.getString("PWD"); // 쿼리문 수행 결과에서 PWD값을 가져옴
-				System.out.println("ID : " + sqlId);
-				System.out.println("PWD : " + sqlPwd);
 				if(id.equals(sqlId) && pwd.equals(sqlPwd)) {
 					Common.close(rs);
 					Common.close(stmt);
@@ -130,7 +128,6 @@ public class MemberDAO {
 	    	pstmt.setString(6, tel);
 	    	//pstmt.setDate(7,  birth);
 	    	result = pstmt.executeUpdate();
-	    	System.out.println("회원 가입 DB 결과 확인: " + result); // 1이면 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

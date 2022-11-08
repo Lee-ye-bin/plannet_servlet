@@ -43,7 +43,6 @@ public class MemberMemo extends HttpServlet {
 		StringBuffer sb = Common.reqStringBuff(request);
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		
-		System.out.println("id : " + (String)jsonObj.get("id"));
 		String reqId = (String)jsonObj.get("id");
 		
 		PrintWriter out = response.getWriter();

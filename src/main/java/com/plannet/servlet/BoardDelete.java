@@ -33,7 +33,6 @@ public class BoardDelete extends HttpServlet {
 	      JSONObject jsonObj = Common.getJsonObj(sb);
 	      String reqNum = (String)jsonObj.get("num");
 	      int getNum = Integer.parseInt(reqNum);
-		  System.out.println("전달 받은 num : " + getNum);
 		  
 	      BoardDAO dao = new BoardDAO();
 	      dao.boardDelete(getNum);	

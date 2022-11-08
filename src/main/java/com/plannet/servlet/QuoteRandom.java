@@ -39,7 +39,6 @@ public class QuoteRandom extends HttpServlet {
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		
 		String reqNum = (String)jsonObj.get("num");
-		System.out.print("랜덤 수 : " + reqNum);
 		
 		PrintWriter out = response.getWriter();
 		
