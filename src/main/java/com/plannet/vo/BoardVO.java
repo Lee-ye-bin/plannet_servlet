@@ -11,7 +11,14 @@ public class BoardVO {
 	private String date;
 	private String detail;
 	private boolean checked;
+	private int likeCnt;
 	
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
 	public int getNum() {
 		return num;
 	}

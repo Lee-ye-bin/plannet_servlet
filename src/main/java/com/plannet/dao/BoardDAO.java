@@ -191,4 +191,71 @@ public class BoardDAO {
 				e.printStackTrace();
 		}
 	}
+	
+	
+	public int boardLikeCnt(String id, int num) {
+		int likeCnt = 0;
+		try {
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			String sql ="SELECT COUNT(*) FROM LIKE_CNT WHERE BOARD_NO = " + num;
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) { // 읽은 데이타가 있으면 true
+				likeCnt = rs.getInt("COUNT(*)");
+			}
+			
+			Common.close(rs);
+			Common.close(stmt);
+		    Common.close(conn);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return likeCnt;
+	}
+	
+	public boolean boardLikeChecked(String id, int num) {
+		boolean likeChecked = false;
+		int result = 0;
+		try {
+			String sql = "SELECT COUNT(*) FROM LIKE_CNT WHERE BOARD_NO = ? AND id = ?";	
+			System.out.println(sql);
+			conn = Common.getConnection();
+			pstmt = conn.prepareStatement(sql);	 // Statement 객체 얻기
+			pstmt.setInt(1, num);
+	    	pstmt.setString(2, id);
+	    	rs = pstmt.executeQuery();
+	
+	    
+	    	while(rs.next()) { // 읽은 데이타가 있으면 true
+	    		result = rs.getInt("COUNT(*)");
+	    		System.out.println("result 입니다:" + result + id + num);
+	    		
+				if (result == 1) { // 이미 좋아요를 누른 상태이면
+					System.out.println("여기들어왔나요 네");
+					likeChecked = false; // 좋아요 상태 해제
+					String deleteSql = "DELETE FROM LIKE_CNT WHERE BOARD_NO = ? AND id = ?"; // SQL 삭제
+					pstmt = conn.prepareStatement(deleteSql);			
+					pstmt.setInt(1, num);
+			    	pstmt.setString(2, id);
+			    	pstmt.executeUpdate();
+				} else {
+					System.out.println("여긴안왔어요");
+					likeChecked = true; // 좋아요 상태로 전환
+					String insertSql = "INSERT INTO LIKE_CNT VALUES (?, ?)"; // SQL 추가
+					pstmt = conn.prepareStatement(insertSql);			
+					pstmt.setString(1, id);
+			    	pstmt.setInt(2, num);
+			    	pstmt.executeUpdate();
+				}
+	    	}
+	
+			Common.close(rs);
+			Common.close(stmt);
+		    Common.close(conn);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return likeChecked;
+	}
 }
