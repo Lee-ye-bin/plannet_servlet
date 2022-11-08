@@ -9,7 +9,6 @@ public class MemberVO {
 	private String nickname;
 	private String email;
 	private String tel;
-//	private Date birth;
 	private Date join;
 	private String memo;
 	private String sns;
@@ -53,12 +52,6 @@ public class MemberVO {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-//	public Date getBirth() {
-//		return birth;
-//	}
-//	public void setBirth(Date birth) {
-//		this.birth = birth; //
-//	}
 	public Date getJoin() {
 		return join;
 	}
@@ -95,7 +88,5 @@ public class MemberVO {
 	public void setReg(boolean isReg) {
 		this.isReg = isReg;
 	}
-	
-	
 }
 

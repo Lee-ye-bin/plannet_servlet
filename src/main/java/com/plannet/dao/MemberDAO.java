@@ -1,7 +1,6 @@
 package com.plannet.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.plannet.common.Common;
-import com.plannet.vo.BoardVO;
 import com.plannet.vo.MemberVO;
 
 public class MemberDAO {
@@ -19,15 +17,18 @@ public class MemberDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 	
+	// 로그인 체크
 	public boolean logingCheck(String id, String pwd) {
 		try {
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			String sql = "SELECT * FROM MEMBER WHERE ID = " + "'" + id + "'";
 			rs = stmt.executeQuery(sql);
+			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				String sqlId = rs.getString("ID"); // 쿼리문 수행 결과에서 ID값을 가져옴
 				String sqlPwd = rs.getString("PWD"); // 쿼리문 수행 결과에서 PWD값을 가져옴
+				
 				if(id.equals(sqlId) && pwd.equals(sqlPwd)) {
 					Common.close(rs);
 					Common.close(stmt);
@@ -43,65 +44,27 @@ public class MemberDAO {
 		}
 		return false;
 	}
-	
-	public List<MemberVO> memberSelect() {
-		List<MemberVO> list = new ArrayList<>();
-		try {
-			conn = Common.getConnection();
-			stmt = conn.createStatement();
-			String sql = "SELECT * FROM MEMBER";
-			rs = stmt.executeQuery(sql);
-			
-			while(rs.next()) {
-				String id = rs.getString("ID");
-				String pwd = rs.getString("PWD");
-				String name = rs.getString("NAME");
-				String nickname = rs.getString("NICKNAME");
-				String email = rs.getString("EMAIL");
-				String tel = rs.getString("TEL");
-				//Date birth = rs.getDate("BIRTH");
-				Date join = rs.getDate("JOIN_DATE");
-				
-				MemberVO vo = new MemberVO();
-				vo.setId(id);
-				vo.setPwd(pwd);
-				vo.setName(name);
-				vo.setNickname(nickname);
-				vo.setEmail(email);
-				vo.setTel(tel);
-				//vo.setBirth(birth);
-				vo.setJoin(join);
-				list.add(vo);
-			}
-			Common.close(rs);
-			Common.close(stmt);
-			Common.close(conn);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
 
 	public boolean regUniCheck(String uni, String type) { // 가입되지 '않은' 경우만 진행되어야 함 
 		boolean isNotReg = false;
+		
 		try {
 			String sql = "";
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			char t = type.charAt(5);
+			
 			switch (t) {
 				case 'I' : 
-					sql = "SELECT * FROM MEMBER WHERE ID = '"+ uni +"'";
+					sql = "SELECT * FROM MEMBER WHERE ID = '" + uni + "'";
 					break;
 				case 'E' : 
-					sql = "SELECT * FROM MEMBER WHERE EMAIL = '"+ uni +"'";
+					sql = "SELECT * FROM MEMBER WHERE EMAIL = '" + uni + "'";
 					break;
 				case 'T' : 
-					sql = "SELECT * FROM MEMBER WHERE TEL = '"+ uni +"'";
+					sql = "SELECT * FROM MEMBER WHERE TEL = '" + uni + "'";
 					break;
 			}
-			
 			rs = stmt.executeQuery(sql);
 			if(rs.next()) isNotReg = false;
 			else isNotReg = true;
@@ -117,6 +80,7 @@ public class MemberDAO {
 	public boolean memberRegister(String id, String pwd, String name, String nickname, String email, String tel) {
 		int result = 0;
 		String sql = "INSERT INTO MEMBER(ID, PWD, NAME, NICKNAME, EMAIL, TEL) VALUES(?, ?, ?, ?, ?, ?)";
+		
 		try {
 			conn = Common.getConnection();
 	    	pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
@@ -126,7 +90,6 @@ public class MemberDAO {
 	    	pstmt.setString(4, nickname);
 	    	pstmt.setString(5, email);
 	    	pstmt.setString(6, tel);
-	    	//pstmt.setDate(7,  birth);
 	    	result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,9 +100,10 @@ public class MemberDAO {
 	    if(result == 1) return true;	
 	    else return false;
 	}
+	
 	public boolean memberDelete(String id) {
 		try {
-			//보드 내용 삭제
+			// 해당하는 회원이 작성한 보드 삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			String sql = "DELETE FROM BOARD WHERE ID = '" + id + "'";
@@ -147,7 +111,8 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			//다이어리삭제
+			
+			// 다이어리 삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			sql = "DELETE FROM DIARY WHERE ID = '" + id + "'";
@@ -155,7 +120,8 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			//플랜삭제
+			
+			// 플랜삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			sql = "DELETE FROM PLAN WHERE ID = '" + id + "'";
@@ -163,7 +129,8 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			//다이어리삭제
+			
+			// 다이어리삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			sql = "DELETE FROM MEMBER WHERE ID = '" + id + "'";
@@ -171,14 +138,13 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
 	
-	//아이디비밀번호 찾기
+	// 아이디 & 비밀번호 찾기
 	public List<MemberVO> memberFindCheck(String uni, String email, String type) { 
 		List<MemberVO> list = new ArrayList<>();
 		try {
@@ -187,9 +153,10 @@ public class MemberDAO {
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			char t = type.charAt(5);
+			
 			switch (t) {
 				case 'I' : 
-					sql = "SELECT * FROM MEMBER WHERE NAME = '"+ uni +"' AND EMAIL = '" + email  + "'";
+					sql = "SELECT * FROM MEMBER WHERE NAME = '" + uni + "' AND EMAIL = '" + email + "'";
 					rs = stmt.executeQuery(sql);
 					if(rs.next()) {
 						vo.setReg(true);
@@ -198,7 +165,7 @@ public class MemberDAO {
 					list.add(vo);
 					break;
 				case 'P' : 
-					sql = "SELECT * FROM MEMBER WHERE ID = '"+ uni +"' AND EMAIL = '" + email  + "'";
+					sql = "SELECT * FROM MEMBER WHERE ID = '" + uni + "' AND EMAIL = '" + email + "'";
 					rs = stmt.executeQuery(sql);
 					if(rs.next()) vo.setReg(true);
 					else vo.setReg(false);
@@ -213,28 +180,27 @@ public class MemberDAO {
 		Common.close(conn);
 		return list; // 가입 되어 있으면 true, 가입이 안 되어 있으면 false 
 	}
-	//새 비밀번호//
+	
+	// 비밀번호 찾기 시 새 비밀번호 설정
 	public boolean memberNewPwd(String id, String pwd) {
 		int result = 0;
+		
 		try {
 			String sql = "UPDATE MEMBER SET PWD = ? WHERE ID = ?";
-			
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sql);			
 			pstmt.setString(1, pwd);
 	    	pstmt.setString(2, id);
 	    	result = pstmt.executeUpdate();
-
+	    	
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
 			return true;
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		if(result == 1) return true;
 		else return false;
 	}
-	
 }

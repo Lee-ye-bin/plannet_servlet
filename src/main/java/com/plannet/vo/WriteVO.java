@@ -34,7 +34,4 @@ public class WriteVO {
 	public void setDiary(String diary) {
 		this.diary = diary;
 	}
-	
-	
-
 }

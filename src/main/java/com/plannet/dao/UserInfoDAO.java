@@ -17,7 +17,6 @@ public class UserInfoDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 
-	
 	public  List<MemberVO> userInfoLoad(String id) {
 		List<MemberVO> list = new ArrayList<>();
 		
@@ -35,6 +34,7 @@ public class UserInfoDAO {
 				String sqlProfile = rs.getString("PROFILE");
 				String sqlImg = rs.getString("PRO_IMG");
 				MemberVO vo = new MemberVO();
+				
 				vo.setNickname(sqlNickname);
 				vo.setEmail(sqlEmail);
 				vo.setTel(sqlPhone);
@@ -43,7 +43,6 @@ public class UserInfoDAO {
 				vo.setImg(sqlImg);
 				list.add(vo);
 			}
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -54,7 +53,7 @@ public class UserInfoDAO {
 	}
 	
 	public void userInfoSave(String id, String nickname, String email, String phone, String sns, String profile) {
-		String sqlNickUdate = "UPDATE MEMBER SET NICKNAME=?, EMAIL=?, TEL=?, SNS=?, PROFILE=? WHERE ID = ?";
+		String sqlNickUdate = "UPDATE MEMBER SET NICKNAME = ?, EMAIL = ?, TEL = ?, SNS = ?, PROFILE = ? WHERE ID = ?";
 		try {
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sqlNickUdate); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
@@ -64,9 +63,7 @@ public class UserInfoDAO {
 	    	pstmt.setString(4, sns);
 	    	pstmt.setString(5, profile);
 	    	pstmt.setString(6, id);
-
 	    	pstmt.executeUpdate();
-	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,11 +84,10 @@ public class UserInfoDAO {
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				allPlan = rs.getInt("COUNT(*)");
 			}
-			
 			Common.close(rs);
 			Common.close(pstmt);
 		    Common.close(conn);
-				//-------------------------------------------------------------------------------------
+		
 		    conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 		    String sqlCheckPlan = "SELECT COUNT(*) FROM PLAN WHERE ID = '" + id + "' AND PLAN_CHECK = 1";
@@ -100,28 +96,24 @@ public class UserInfoDAO {
 		    while(rs.next()) { // 읽은 데이타가 있으면 true
 				checkPlan = rs.getInt("COUNT(*)");
 		    }
-		    
 		    Common.close(rs);
 			Common.close(pstmt);
 		    Common.close(conn);
-	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return (int)Math.floor(checkPlan*100/allPlan);
-		
-
 	}
+	
 	public void userImgSave(String id, String imgName) {
-		String sqlNickUdate = "UPDATE MEMBER SET PRO_IMG=? WHERE ID = ?";
+		String sqlNickUdate = "UPDATE MEMBER SET PRO_IMG = ? WHERE ID = ?";
+		
 		try {
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sqlNickUdate); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
 	    	pstmt.setString(1, imgName);
 	    	pstmt.setString(2, id);
-
 	    	pstmt.executeUpdate();
-	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

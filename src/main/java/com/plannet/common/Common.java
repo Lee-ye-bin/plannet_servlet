@@ -47,8 +47,7 @@ public class Common {
 			if(stmt != null && !stmt.isClosed()) {
 				stmt.close();
 				System.out.println("Statement 해제 성공");
-			}
-			
+			}		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +76,6 @@ public class Common {
 	public static StringBuffer reqStringBuff(HttpServletRequest req) {
 		StringBuffer sb = new StringBuffer();
 		String line = null;
-		
 		try {
 			BufferedReader reader = req.getReader(); // 개행문자를 만나기 전까지 받음
 			while((line = reader.readLine()) != null) sb.append(line);		
@@ -96,5 +94,4 @@ public class Common {
 		}
 		return jsonObj;
 	}
-
 }

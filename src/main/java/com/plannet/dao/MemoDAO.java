@@ -17,7 +17,6 @@ public class MemoDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 
-	
 	public  List<MemberVO> memberMemo(String id) {
 		List<MemberVO> list = new ArrayList<>();
 		
@@ -35,7 +34,6 @@ public class MemoDAO {
 				vo.setMemo(sqlMemo);
 				list.add(vo);
 			}
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -60,5 +58,4 @@ public class MemoDAO {
 		Common.close(pstmt);
 	    Common.close(conn);
 	}
-
 }

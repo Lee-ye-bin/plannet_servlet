@@ -1,7 +1,5 @@
 package com.plannet.vo;
 
-import java.sql.Date;
-
 public class BoardVO {
 	private int num;
 	private String id;
@@ -13,12 +11,6 @@ public class BoardVO {
 	private boolean checked;
 	private int likeCnt;
 	
-	public int getLikeCnt() {
-		return likeCnt;
-	}
-	public void setLikeCnt(int likeCnt) {
-		this.likeCnt = likeCnt;
-	}
 	public int getNum() {
 		return num;
 	}
@@ -66,5 +58,11 @@ public class BoardVO {
 	}
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
 	}
 }

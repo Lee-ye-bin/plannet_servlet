@@ -1,14 +1,14 @@
 package com.plannet.dao;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
+import java.sql.Date;
 
 import com.plannet.common.Common;
 import com.plannet.vo.WriteVO;
@@ -21,12 +21,11 @@ public class WriteDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 
-	
 	public  List<WriteVO> writeLoad(String id, Date date) {
 		List<WriteVO> list = new ArrayList<>();
 		
 		try {
-			//리스트 가져오기
+			// 리스트 가져오기
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			
@@ -34,8 +33,8 @@ public class WriteDAO {
 			rs = stmt.executeQuery(sqlListLoad);
 			
 			WriteVO vo = new WriteVO();
-			
 			List<Map<String, Object>> planList = new ArrayList<Map<String, Object>>();
+			
 			while(rs.next()) { // 읽은 데이타가 있으면 true
 				Map<String, Object> planItem = new LinkedHashMap<String, Object>();
 				
@@ -44,57 +43,51 @@ public class WriteDAO {
 				else planItem.put("checked", false);
 				planItem.put("text", rs.getString("PLAN"));
 				planItem.put("deleted", false);
-				
 				planList.add(planItem);
 			}
 			vo.setPlan(planList);
-			
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
 			
-			
-			
-			//다이어리 가져오기
+			// 다이어리 가져오기
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			
-			String sqlDiaryLoad = "SELECT * FROM DIARY WHERE ID = "+ "'" + id + "'" + " AND DIARY_DATE = " + "'" + date +"'";
+			String sqlDiaryLoad = "SELECT * FROM DIARY WHERE ID = " + "'" + id + "'" + " AND DIARY_DATE = " + "'" + date + "'";
 			rs = stmt.executeQuery(sqlDiaryLoad);
+			
 			while(rs.next()) {
 				String sqlDiary = rs.getString("DIARY");
 				vo.setDiary(sqlDiary);
 			}
-			
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
-    		//리스트에 담기
-			list.add(vo);
-			
+			list.add(vo); // 리스트에 담기
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return list;
 	}
-//	
+
 	public void writeSave(String id, Date date, List<Map<String, Object>> plan, String diary) {
 		String sqlDiaryCheck = "SELECT * FROM DIARY WHERE ID = '" + id + "' AND DIARY_DATE = '" + date + "'" ;
 		String sqlDiaryUdate = "UPDATE DIARY SET DIARY = ? WHERE ID = ? AND DIARY_DATE = ?";
 		String sqlDiaryInsert = "INSERT INTO DIARY VALUES(?, ?, ?)";
 		String sqlListRemove = "DELETE FROM PLAN WHERE ID = ? AND PLAN_DATE = ?";
 		String sqlListInsert = "INSERT INTO PLAN VALUES(?, ?, ?, ?, ?)";
+		
 		try {
 			conn = Common.getConnection();
 			
-			//PLAN 일괄삭제
+			// PLAN 일괄삭제
 			pstmt = conn.prepareStatement(sqlListRemove); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
 	    	pstmt.setString(1, id);
 	    	pstmt.setDate(2, date);
 	    	pstmt.executeUpdate();
 	    	
-	    	//PLAN 저장
+	    	// PLAN 저장
 	    	int cnt = 0;
 	    	
 	    	for(Map<String, Object> p : plan) {
@@ -111,9 +104,8 @@ public class WriteDAO {
 	    	    	cnt++;
 	    		} 
 	    	}
-	    	
 
-			//DIARY 업데이트
+			// DIARY 업데이트
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			rs = stmt.executeQuery(sqlDiaryCheck);
 			
@@ -130,10 +122,6 @@ public class WriteDAO {
 		    	pstmt.setString(3, diary);
 		    	pstmt.executeUpdate();
 			};
-			
-			
-	    	
-	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,7 +133,7 @@ public class WriteDAO {
 	public  List<List<String>> planLoad(String id) {
 		List<List<String>> allPlan = new ArrayList<List<String>>();
 		try {
-			//리스트 가져오기
+			// 리스트 가져오기
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			
@@ -157,7 +145,6 @@ public class WriteDAO {
 				String date = (rs.getString("PLAN_DATE")).substring(0, 10);
 				endPlan.add(date);
 			}
-			
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
@@ -173,31 +160,27 @@ public class WriteDAO {
 				String date = (rs.getString("PLAN_DATE")).substring(0, 10);
 				doPlan.add(date);
 			}
-			
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
 			
 			allPlan.add(endPlan);
 			allPlan.add(doPlan);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return allPlan;
 	}
+	
 	public  Map<String, List<Map<String, Object>>> weekList(String id) {
 		Map<String, List<Map<String, Object>>> weekList = new LinkedHashMap<String, List<Map<String, Object>>>();
-		
-		
 		
 		try {
 			for(int i = 0; i < 7; i++) {
 				conn = Common.getConnection();
 				stmt = conn.createStatement(); // Statement 객체 얻기
 				
-				String sql = "SELECT * FROM PLAN WHERE PLAN_DATE = (SELECT TRUNC(sysdate, 'd')+" + i + " FROM DUAL) AND ID = '" + id +  "'";
+				String sql = "SELECT * FROM PLAN WHERE PLAN_DATE = (SELECT TRUNC(sysdate, 'd') +" + i + " FROM DUAL) AND ID = '" + id +  "'";
 				String[] weekday = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
 				
 				rs = stmt.executeQuery(sql);
@@ -210,19 +193,15 @@ public class WriteDAO {
 					listItem.put("checked", rs.getString("PLAN_CHECK"));
 					dayList.add(listItem);
 				}
-				
 				Common.close(rs);
 				Common.close(stmt);
 				Common.close(conn);
 				
 				weekList.put(weekday[i], dayList);
 			}
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return weekList;
 	}
-
 }
