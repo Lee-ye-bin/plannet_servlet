@@ -1,7 +1,7 @@
 package com.plannet.servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
-
 
 @WebServlet("/BoardList")
 public class BoardList extends HttpServlet {
@@ -40,6 +40,7 @@ public class BoardList extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list = dao.boardList();
 		PrintWriter out = response.getWriter();
+		
 		JSONArray boardArray = new JSONArray();
 		for(BoardVO e : list) {
 			JSONObject boardText = new JSONObject();
@@ -53,5 +54,4 @@ public class BoardList extends HttpServlet {
 		}	
 		out.print(boardArray);
 	}
-
 }

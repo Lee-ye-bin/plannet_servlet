@@ -32,6 +32,7 @@ public class MemberDelete extends HttpServlet {
       request.setCharacterEncoding("utf-8");
       Common.corsResSet(response);
       StringBuffer sb = Common.reqStringBuff(request);
+      
       JSONObject jsonObj = Common.getJsonObj(sb);
       String getId = (String)jsonObj.get("id");
 

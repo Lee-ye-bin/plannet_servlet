@@ -1,4 +1,5 @@
 package com.plannet.servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,7 +17,6 @@ import com.plannet.common.Common;
 import com.plannet.dao.UserInfoDAO;
 import com.plannet.vo.MemberVO;
 
-
 @WebServlet("/UserInfoLoad")
 public class UserInfoLoad extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,11 +26,10 @@ public class UserInfoLoad extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response = Common.corsResSet(response);
 	}
 
@@ -38,12 +37,10 @@ public class UserInfoLoad extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response = Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String reqId = (String)jsonObj.get("id");
-		
 		PrintWriter out = response.getWriter();
 		
 		UserInfoDAO dao = new UserInfoDAO();

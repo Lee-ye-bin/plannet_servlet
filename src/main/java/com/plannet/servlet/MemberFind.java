@@ -21,8 +21,7 @@ import com.plannet.vo.MemberVO;
 public class MemberFind extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
 	
@@ -30,8 +29,8 @@ public class MemberFind extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		String getUni = (String)jsonObj.get("uni");
 		String getEmail = (String)jsonObj.get("email");
@@ -39,7 +38,6 @@ public class MemberFind extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		List<MemberVO> list = dao.memberFindCheck(getUni, getEmail, getType);
-		
 		PrintWriter out = response.getWriter();
 		
 		JSONArray findUni = new JSONArray();
@@ -47,14 +45,9 @@ public class MemberFind extends HttpServlet {
 			JSONObject jsonobj = new JSONObject();
 			if(e.isReg() == true) jsonobj.put("result", "OK");
 			else jsonobj.put("result", "NOK");
-			
 			if(getType.equals("Type_ID")) jsonobj.put("id", e.getId());
-			
 			findUni.add(jsonobj);
 		}	
 		out.print(findUni);
 	}
 }
-
-
-

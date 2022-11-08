@@ -2,7 +2,6 @@ package com.plannet.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,24 +18,22 @@ import com.plannet.dao.MemberDAO;
 public class MemberNewPwd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
 	
-	@SuppressWarnings("unchecked")//
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		String getId = (String)jsonObj.get("id");
 		String getPwd = (String)jsonObj.get("pwd");
 		
 		MemberDAO dao = new MemberDAO();
 		boolean isChange = dao.memberNewPwd(getId, getPwd);
-		
 		PrintWriter out = response.getWriter();
 		
 		JSONObject jsonobj = new JSONObject();
@@ -45,6 +42,3 @@ public class MemberNewPwd extends HttpServlet {
 		out.print(jsonobj);
 	}
 }
-
-
-

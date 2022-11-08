@@ -2,7 +2,6 @@ package com.plannet.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.plannet.common.Common;
-import com.plannet.dao.QuoteDAO;
 import com.plannet.dao.UserInfoDAO;
-import com.plannet.vo.MemberVO;
-
 
 @WebServlet("/UserDo")
 public class UserDo extends HttpServlet {
@@ -28,11 +23,10 @@ public class UserDo extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response = Common.corsResSet(response);
 	}
 
@@ -40,12 +34,10 @@ public class UserDo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response = Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String reqId = (String)jsonObj.get("id");
-		
 		PrintWriter out = response.getWriter();
 		
 		UserInfoDAO dao = new UserInfoDAO();

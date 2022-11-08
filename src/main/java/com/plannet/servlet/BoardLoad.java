@@ -17,37 +17,35 @@ import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 import com.plannet.vo.BoardVO;
 
-
-
 @WebServlet("/BoardLoad")
 public class BoardLoad extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+	private static final long serialVersionUID = 1L;   
     
     public BoardLoad() {
+
         super();
-        
     }
+    
     protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
-    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-//
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BoardDAO dao = new BoardDAO();
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
 		StringBuffer sb = Common.reqStringBuff(request);
+	
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		String reqNum = (String)jsonObj.get("num");
 		int inNum = Integer.parseInt(reqNum);
-		System.out.println("전달 받은 num : " + reqNum);
 		List<BoardVO> list =dao.boardLoad(inNum);
 		PrintWriter out = response.getWriter();
+		
 		JSONArray boardLeadArray = new JSONArray();
 		for(BoardVO e : list) {
 			JSONObject boardStr = new JSONObject();
@@ -63,5 +61,4 @@ public class BoardLoad extends HttpServlet {
 		}
 		out.print(boardLeadArray);
 	}	
-	
 }

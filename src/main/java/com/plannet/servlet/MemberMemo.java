@@ -17,7 +17,6 @@ import com.plannet.common.Common;
 import com.plannet.dao.MemoDAO;
 import com.plannet.vo.MemberVO;
 
-
 @WebServlet("/MemberMemo")
 public class MemberMemo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,11 +26,10 @@ public class MemberMemo extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response = Common.corsResSet(response);
 	}
 
@@ -39,18 +37,14 @@ public class MemberMemo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response = Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String reqId = (String)jsonObj.get("id");
-		
 		PrintWriter out = response.getWriter();
-		
 		
 		MemoDAO dao = new MemoDAO();
 		List<MemberVO> list = dao.memberMemo(reqId); 
-		
 		JSONArray memoArray = new JSONArray();
 		for(MemberVO e : list) {
 			JSONObject memoText = new JSONObject();

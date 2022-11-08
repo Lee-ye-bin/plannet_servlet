@@ -12,7 +12,6 @@ import org.json.simple.JSONObject;
 import com.plannet.common.Common;
 import com.plannet.dao.BoardDAO;
 
-
 @WebServlet("/BoardViews")
 public class BoardViews extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,17 +27,16 @@ public class BoardViews extends HttpServlet {
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
-	// @SuppressWarnings("unchecked")
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 	    Common.corsResSet(response);
 	    StringBuffer sb = Common.reqStringBuff(request);
+	    
 	    JSONObject jsonObj = Common.getJsonObj(sb);
 	    String reqNum = (String)jsonObj.get("num");
 		int inNum = Integer.parseInt(reqNum);
 		BoardDAO dao = new BoardDAO();
 		dao.boardViews(inNum);
 	}
-	
-	
 }

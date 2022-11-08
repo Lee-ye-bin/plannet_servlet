@@ -18,8 +18,7 @@ import com.plannet.dao.MemberDAO;
 public class MemberCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-		    throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
 	
@@ -27,8 +26,8 @@ public class MemberCheck extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Common.corsResSet(response);
-
 		StringBuffer sb = Common.reqStringBuff(request);
+		
 		JSONObject jsonObj = Common.getJsonObj(sb);
 		String getUni = (String)jsonObj.get("uni");
 		String getType = (String)jsonObj.get("type");

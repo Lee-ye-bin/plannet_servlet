@@ -14,8 +14,6 @@ import org.json.simple.JSONObject;
 import com.plannet.common.Common;
 import com.plannet.dao.MemberDAO;
 
-/**/
-
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +37,6 @@ public class LoginServlet extends HttpServlet {
 		
 		// 요청 받은 메시지 JSON 파싱
 		JSONObject jsonObj = Common.getJsonObj(sb);
-		
 		String getId = (String)jsonObj.get("id");
 		String getPwd = (String)jsonObj.get("pwd");
 		
