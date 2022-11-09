@@ -11,14 +11,14 @@ public class CommentVO {
 	public int getnum() {
 		return num;
 	}
-	public void setnum(int bnum) {
-		this.num = bnum;
+	public void setnum(int num) {
+		this.num = num;
 	}
 	public int getBnum() {
 		return bnum;
 	}
-	public void setBnum(int num) {
-		this.bnum = num;
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
 	}
 	public String getId() {
 		return id;

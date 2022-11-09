@@ -23,8 +23,8 @@ public class CommentDAO {
 		try {
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
-	    	pstmt.setInt(1, bnum);
-	    	pstmt.setInt(2, num);
+	    	pstmt.setInt(1, num);
+	    	pstmt.setInt(2, bnum);
 	    	pstmt.setString(3, id);
 	    	pstmt.setString(4, nickname);
 	    	pstmt.setDate(5, date);
