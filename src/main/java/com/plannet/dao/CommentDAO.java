@@ -18,8 +18,8 @@ public class CommentDAO {
 	// SQL문을 미리 컴파일해서 재 사용하므로 Statement 인터페이스보다 훨씬 빨르게 데이터베이스 작업을 수행
 	private PreparedStatement pstmt = null; 
 	
-	public void boardComment(int num, int bnum, String id, String nickname, Date date, String detail) {
-		String sql = "INSERT INTO COMMENTS VALUES (?, ?, ?, ?, ?, ?)";
+	public void boardComment(int num, int bnum, String id, String nickname, String detail) {
+		String sql = "INSERT INTO COMMENTS VALUES (?, ?, ?, ?, sysdate, ?)";
 		try {
 			conn = Common.getConnection();
 			pstmt = conn.prepareStatement(sql); // 미리 만들어둔 쿼리문 양식에 맞춰 넣음
@@ -27,8 +27,7 @@ public class CommentDAO {
 	    	pstmt.setInt(2, num);
 	    	pstmt.setString(3, id);
 	    	pstmt.setString(4, nickname);
-	    	pstmt.setDate(5, date);
-	    	pstmt.setString(6, detail);
+	    	pstmt.setString(5, detail);
 	    	pstmt.executeUpdate();	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,34 +37,32 @@ public class CommentDAO {
 		Common.close(conn);
 	}
 	
-	public List<CommentVO> boardLoad(int num) {
+	public List<CommentVO> boardCommetLoad(int num) {
 		List<CommentVO> list = new ArrayList<>();
 		
 		try {
-			CommentVO vo = new CommentVO();
 			
 			// 디테일 외 전부 불러오기
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
-			String sql = "SELECT * FROM BOARD WHERE BOARD_NO =" + num;
+			String sql = "SELECT * FROM COMMENTS WHERE BOARD_NO =" + num + "ORDER BY COMMENT_NO";
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
+				CommentVO vo = new CommentVO();
 				int sqlNo = rs.getInt("COMMENT_NO");
-				int sqlNum = rs.getInt("BOARD_NO");
 				String sqlId = rs.getString("ID");
 				String sqlNickname = rs.getString("NICKNAME");
 				String sqlDate = rs.getString("WRITE_DATE");
 				String sqlDetail = rs.getString("DETAIL");
 				
-				vo.setBnum(sqlNum);
 				vo.setnum(sqlNo);
 				vo.setId(sqlId);
 				vo.setNickname(sqlNickname);
 				vo.setDate(sqlDate);
 				vo.setDetail(sqlDetail);
+				list.add(vo);
 			}
-		    list.add(vo);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

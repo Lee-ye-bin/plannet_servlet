@@ -44,12 +44,11 @@ public class BoardComment extends HttpServlet {
 	     int getBnum = Integer.parseInt(Bnum);
 	     String getId = (String)jsonObj.get("id");
 	     String getNickname = (String)jsonObj.get("nickname");	
-	     Date getDate = Date.valueOf((String) jsonObj.get("date"));
 	     String getDetail = (String)jsonObj.get("detail");
 	
 	     
 	     CommentDAO dao = new CommentDAO();
-	     dao.boardComment(getNum, getBnum, getId, getNickname, getDate, getDetail );
+	     dao.boardComment(getNum, getBnum, getId, getNickname, getDetail);
 	     
 	     
 	}
