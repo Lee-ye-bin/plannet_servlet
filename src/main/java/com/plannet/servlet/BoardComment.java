@@ -31,7 +31,7 @@ public class BoardComment extends HttpServlet {
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Common.corsResSet(response);
 	}
-	// @SuppressWarnings("unchecked")
+	// @SuppressWarnings("unchecked")//
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 request.setCharacterEncoding("utf-8");
 	     Common.corsResSet(response);
@@ -44,12 +44,11 @@ public class BoardComment extends HttpServlet {
 	     int getBnum = Integer.parseInt(Bnum);
 	     String getId = (String)jsonObj.get("id");
 	     String getNickname = (String)jsonObj.get("nickname");	
-	     Date getDate = Date.valueOf((String) jsonObj.get("date"));
 	     String getDetail = (String)jsonObj.get("detail");
 	
 	     
 	     CommentDAO dao = new CommentDAO();
-	     dao.boardComment(getNum, getBnum, getId, getNickname, getDate, getDetail );
+	     dao.boardComment(getNum, getBnum, getId, getNickname, getDetail);
 	     
 	     
 	}
