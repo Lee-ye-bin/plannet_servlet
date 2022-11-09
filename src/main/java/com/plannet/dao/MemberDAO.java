@@ -138,6 +138,15 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
+			
+			// 댓글삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM COMMENTS WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
