@@ -41,8 +41,6 @@ public class CommentDAO {
 		List<CommentVO> list = new ArrayList<>();
 		
 		try {
-			
-			// 디테일 외 전부 불러오기
 			conn = Common.getConnection();
 			stmt = conn.createStatement();
 			String sql = "SELECT * FROM COMMENTS WHERE BOARD_NO =" + num + "ORDER BY COMMENT_NO";

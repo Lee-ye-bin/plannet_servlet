@@ -19,7 +19,7 @@ import com.plannet.dao.CommentDAO;
 import com.plannet.vo.BoardVO;
 import com.plannet.vo.CommentVO;
 
-@WebServlet("/BoardCommentLoad")
+@WebServlet("/BoardCommentLoad")//
 public class BoardCommentLoad extends HttpServlet {
 	private static final long serialVersionUID = 1L;   
     
@@ -49,16 +49,16 @@ public class BoardCommentLoad extends HttpServlet {
 		List<CommentVO> list =dao.boardCommetLoad(inNum);
 		PrintWriter out = response.getWriter();
 		
-		JSONArray boardLeadArray = new JSONArray();
+		JSONArray commentArray = new JSONArray();
 		for(CommentVO e : list) {
-			JSONObject boardStr = new JSONObject();
-			boardStr.put("no", e.getnum());
-			boardStr.put("id", e.getId());
-			boardStr.put("nickname", e.getNickname());
-			boardStr.put("date", e.getDate());
-			boardStr.put("detail", e.getDetail());
-			boardLeadArray.add(boardStr);
+			JSONObject commentStr = new JSONObject();
+			commentStr.put("no", e.getnum());
+			commentStr.put("id", e.getId());
+			commentStr.put("nickname", e.getNickname());
+			commentStr.put("date", e.getDate());
+			commentStr.put("detail", e.getDetail());
+			commentArray.add(commentStr);
 		}
-		out.print(boardLeadArray);
+		out.print(commentArray);
 	}	
 }
