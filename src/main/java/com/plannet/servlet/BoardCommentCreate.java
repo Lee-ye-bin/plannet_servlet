@@ -15,11 +15,11 @@ import com.plannet.dao.BoardDAO;
 import com.plannet.dao.CommentDAO;
 
 
-@WebServlet("/BoardComment")
-public class BoardComment extends HttpServlet {
+@WebServlet("/BoardCommentCreate")
+public class BoardCommentCreate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public BoardComment() {
+    public BoardCommentCreate() {
         super();
 
     }
@@ -38,17 +38,14 @@ public class BoardComment extends HttpServlet {
 	     StringBuffer sb = Common.reqStringBuff(request);
 	     JSONObject jsonObj = Common.getJsonObj(sb);
 	     
-	     String reqNum = (String)jsonObj.get("comment_no");
-	     int getNum = Integer.parseInt(reqNum);
-	     String Bnum = (String)jsonObj.get("board_no");
+	     String Bnum = (String)jsonObj.get("bnum");
 	     int getBnum = Integer.parseInt(Bnum);
-	     String getId = (String)jsonObj.get("id");
-	     String getNickname = (String)jsonObj.get("nickname");	
+	     String getId = (String)jsonObj.get("id");	
 	     String getDetail = (String)jsonObj.get("detail");
 	
 	     
 	     CommentDAO dao = new CommentDAO();
-	     dao.boardComment(getNum, getBnum, getId, getNickname, getDetail);
+	     dao.boardComment(getBnum, getId, getDetail);
 	     
 	     
 	}

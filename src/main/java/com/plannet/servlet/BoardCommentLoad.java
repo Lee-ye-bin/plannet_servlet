@@ -52,7 +52,6 @@ public class BoardCommentLoad extends HttpServlet {
 		JSONArray commentArray = new JSONArray();
 		for(CommentVO e : list) {
 			JSONObject commentStr = new JSONObject();
-			commentStr.put("no", e.getnum());
 			commentStr.put("id", e.getId());
 			commentStr.put("nickname", e.getNickname());
 			commentStr.put("date", e.getDate());
