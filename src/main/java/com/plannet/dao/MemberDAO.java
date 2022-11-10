@@ -147,6 +147,24 @@ public class MemberDAO {
 			Common.close(rs);
 			Common.close(stmt);
 			Common.close(conn);
+			
+			// 좋아요삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM LIKE_CNT WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
+			
+			// 회원삭제
+			conn = Common.getConnection();
+			stmt = conn.createStatement(); // Statement 객체 얻기
+			sql = "DELETE FROM MEMBER WHERE ID = '" + id + "'";
+			stmt.executeQuery(sql);
+			Common.close(rs);
+			Common.close(stmt);
+			Common.close(conn);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
