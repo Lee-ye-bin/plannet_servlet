@@ -106,7 +106,7 @@ public class MemberDAO {
 			// 댓글삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
-			String sql = "DELETE FROM COMMENTS WHERE ID = '" + id + "'";
+			String sql = "DELETE FROM COMMENTS WHERE BOARD_NO  = ANY (SELECT BOARD_NO FROM BOARD WHERE ID = '" + id + "')";
 			stmt.executeQuery(sql);
 			Common.close(rs);
 			Common.close(stmt);
@@ -115,7 +115,7 @@ public class MemberDAO {
 			// 좋아요삭제
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
-			sql = "DELETE FROM LIKE_CNT WHERE ID = '" + id + "'";
+			sql = "DELETE FROM LIKE_CNT WHERE BOARD_NO  = ANY (SELECT BOARD_NO FROM BOARD WHERE ID = '" + id + "')";
 			stmt.executeQuery(sql);
 			Common.close(rs);
 			Common.close(stmt);
