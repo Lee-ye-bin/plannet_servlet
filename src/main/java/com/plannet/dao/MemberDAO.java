@@ -101,6 +101,7 @@ public class MemberDAO {
 	    else return false;
 	}
 	
+	
 	public boolean memberDelete(String id) {
 		try {
 			// 댓글삭제
