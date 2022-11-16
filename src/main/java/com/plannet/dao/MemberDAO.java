@@ -101,6 +101,7 @@ public class MemberDAO {
 	    else return false;
 	}
 	
+	
 	public boolean memberDelete(String id) {
 		try {
 			// 댓글삭제
@@ -121,6 +122,24 @@ public class MemberDAO {
 			Common.close(stmt);
 			Common.close(conn);
 			
+			
+			// 해당하는 회원이 작성한 보드 삭제
+						conn = Common.getConnection();
+						stmt = conn.createStatement(); // Statement 객체 얻기
+						sql = "DELETE FROM LIKE_CNT WHERE ID = '" + id + "'";
+						stmt.executeQuery(sql);
+						Common.close(rs);
+						Common.close(stmt);
+						Common.close(conn);
+						
+						// 해당하는 회원이 작성한 보드 삭제
+						conn = Common.getConnection();
+						stmt = conn.createStatement(); // Statement 객체 얻기
+						sql = "DELETE FROM COMMENTS WHERE ID = '" + id + "'";
+						stmt.executeQuery(sql);
+						Common.close(rs);
+						Common.close(stmt);
+						Common.close(conn);
 			
 			// 해당하는 회원이 작성한 보드 삭제
 			conn = Common.getConnection();
@@ -144,15 +163,6 @@ public class MemberDAO {
 			conn = Common.getConnection();
 			stmt = conn.createStatement(); // Statement 객체 얻기
 			sql = "DELETE FROM PLAN WHERE ID = '" + id + "'";
-			stmt.executeQuery(sql);
-			Common.close(rs);
-			Common.close(stmt);
-			Common.close(conn);
-			
-			// 다이어리삭제
-			conn = Common.getConnection();
-			stmt = conn.createStatement(); // Statement 객체 얻기
-			sql = "DELETE FROM MEMBER WHERE ID = '" + id + "'";
 			stmt.executeQuery(sql);
 			Common.close(rs);
 			Common.close(stmt);
